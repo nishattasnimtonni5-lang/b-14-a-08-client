@@ -48,7 +48,7 @@ const detailsPage = async({params}:Props) => {
   let fetchFailed = false;
 
   try {
-    const res = await fetch(`http://localhost:5000/api/studios/${id}`);
+    const res = await fetch(`https://b-14-a-08-server.vercel.app/api/studios/${id}`);
     studio = await res.json()
     fetchFailed = !res.ok;
   } catch {

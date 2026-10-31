@@ -61,7 +61,7 @@ export const StudioCard = ({ studio }: { studio: Studio }) => (
 );
 
 const FeaturedStudios = async() => {
-  const res=await fetch("http://localhost:5000/api/studios")
+  const res=await fetch("https://b-14-a-08-server.vercel.app/api/studios")
  const studios=await res.json()
   return (
     <section className="bg-[#04100e] py-20">
