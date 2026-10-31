@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Star, MapPin, ArrowRight } from "lucide-react";
-import { featuredStudios, type Studio } from "@/data/studios";
+import { Studio } from "@/data/studios";
+
 
 // Maps a category label to its badge color.
 const badgeColors: Record<string, string> = {
@@ -11,7 +12,7 @@ const badgeColors: Record<string, string> = {
   "Art Workshop": "bg-pink-500",
 };
 
-const StudioCard = ({ studio }: { studio: Studio }) => (
+export const StudioCard = ({ studio }: { studio: Studio }) => (
   <article className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0a1615] transition-all duration-300 hover:-translate-y-1.5 hover:border-emerald-400/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.25)]">
     {/* Image + category badge */}
     <div className="relative aspect-[16/10] overflow-hidden">
@@ -59,7 +60,9 @@ const StudioCard = ({ studio }: { studio: Studio }) => (
   </article>
 );
 
-const FeaturedStudios = () => {
+const FeaturedStudios = async() => {
+  const res=await fetch("http://localhost:5000/api/studios")
+ const studios=await res.json()
   return (
     <section className="bg-[#04100e] py-20">
       <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
@@ -85,7 +88,7 @@ const FeaturedStudios = () => {
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-          {featuredStudios.map((studio) => (
+          {studios.map((studio:Studio) => (
             <StudioCard key={studio.id} studio={studio} />
           ))}
         </div>
@@ -95,3 +98,4 @@ const FeaturedStudios = () => {
 };
 
 export default FeaturedStudios;
+
