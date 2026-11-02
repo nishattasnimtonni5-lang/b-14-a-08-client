@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 const links = [
   { label: "Home", href: "/", active: true },
   { label: "Explore Studios", href: "/explore" },
-  { label: "My bookings", href: "/bookingsPage" },
+  { label: "My bookings", href: "/myBookings" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "About Us", href: "/about" },
 ];
@@ -22,7 +22,7 @@ const handleSignOut=async ()=>{
   await authClient.signOut();
 }
   return (
-    <header className="sticky top-0 z-50 border-b border-white/5 bg-[#050c0b]/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex h-[68px] max-w-[1280px] items-center justify-between px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
@@ -31,7 +31,7 @@ const handleSignOut=async ()=>{
           </span>
           <span className="text-xl font-bold tracking-tight">
             <span className="text-emerald-400">Studio</span>
-            <span className="text-white">Space</span>
+            <span className="text-slate-900">Space</span>
           </span>
         </Link>
 
@@ -44,7 +44,7 @@ const handleSignOut=async ()=>{
               className={`relative py-2 text-sm font-medium transition-colors ${
                 l.active
                   ? "text-emerald-400"
-                  : "text-slate-300 hover:text-white"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               {l.label}
@@ -82,7 +82,7 @@ onClick={handleSignOut}>
         <div className="hidden items-center gap-4 md:flex">
           <Link
             href="/signin"
-            className="text-sm font-medium text-slate-200 transition-colors hover:text-emerald-400"
+            className="text-sm font-medium text-slate-700 transition-colors hover:text-emerald-600"
           >
             Sign in
           </Link>
@@ -98,7 +98,7 @@ onClick={handleSignOut}>
         {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className="grid h-10 w-10 place-items-center rounded-lg text-slate-200 md:hidden"
+          className="grid h-10 w-10 place-items-center rounded-lg text-slate-700 md:hidden"
           aria-label="Toggle menu"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
@@ -107,7 +107,7 @@ onClick={handleSignOut}>
 
       {/* Mobile menu */}
       {open && (
-        <div className="border-t border-white/5 bg-[#050c0b] px-6 py-4 md:hidden">
+        <div className="border-t border-slate-200 bg-white px-6 py-4 md:hidden">
           <nav className="flex flex-col gap-1">
             {links.map((l) => (
               <Link
@@ -117,7 +117,7 @@ onClick={handleSignOut}>
                 className={`rounded-lg px-3 py-2.5 text-sm font-medium ${
                   l.active
                     ? "bg-emerald-500/10 text-emerald-400"
-                    : "text-slate-300 hover:bg-white/5"
+                    : "text-slate-600 hover:bg-slate-100"
                 }`}
               >
                 {l.label}
@@ -133,7 +133,7 @@ onClick={handleSignOut}>
           <div className="mt-4 flex items-center gap-3">
             <Link
               href="/signin"
-              className="flex-1 rounded-full border border-white/15 py-2.5 text-center text-sm font-medium text-slate-200"
+              className="flex-1 rounded-full border border-slate-300 py-2.5 text-center text-sm font-medium text-slate-700"
             >
               Sign in
             </Link>

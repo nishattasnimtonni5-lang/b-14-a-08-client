@@ -12,11 +12,11 @@ const icons = {
 
 // Per-category accent color for the icon tile.
 const accents: Record<Category["icon"], string> = {
-  camera: "bg-emerald-500/15 text-emerald-400",
-  mic: "bg-indigo-500/15 text-indigo-400",
-  music: "bg-orange-500/15 text-orange-400",
-  video: "bg-sky-500/15 text-sky-400",
-  palette: "bg-pink-500/15 text-pink-400",
+  camera: "bg-emerald-500/15 text-emerald-700",
+  mic: "bg-indigo-500/15 text-indigo-700",
+  music: "bg-orange-500/15 text-orange-700",
+  video: "bg-sky-500/15 text-sky-700",
+  palette: "bg-pink-500/15 text-pink-700",
 };
 
 const CategoryCard = ({ category }: { category: Category }) => {
@@ -25,7 +25,7 @@ const CategoryCard = ({ category }: { category: Category }) => {
   return (
     <Link
       href={`/explore?category=${encodeURIComponent(category.name)}`}
-      className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-[#0a1615] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/50 hover:shadow-[0_0_28px_rgba(16,185,129,0.22)]"
+      className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/50 hover:shadow-[0_0_28px_rgba(16,185,129,0.22)]"
     >
       <span
         className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.35)] ${
@@ -34,10 +34,10 @@ const CategoryCard = ({ category }: { category: Category }) => {
       >
         <Icon size={20} />
       </span>
-      <span className="flex-1 text-sm font-semibold text-white">{category.name}</span>
+      <span className="flex-1 text-sm font-semibold text-slate-900">{category.name}</span>
       <ArrowRight
         size={16}
-        className="text-slate-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-emerald-400"
+        className="text-slate-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-emerald-600"
       />
     </Link>
   );
@@ -45,13 +45,13 @@ const CategoryCard = ({ category }: { category: Category }) => {
 
 const BrowseByCategories = () => {
   return (
-    <section className="bg-[#04100e] pb-20">
+    <section className="bg-slate-50 pb-20">
       <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
         <div className="mb-8">
-          <h2 className="text-2xl font-extrabold tracking-tight text-white">
+          <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">
             Browse by Categories
           </h2>
-          <p className="mt-1.5 text-sm text-slate-400">
+          <p className="mt-1.5 text-sm text-slate-600">
             Find the perfect studio for your creative needs.
           </p>
         </div>

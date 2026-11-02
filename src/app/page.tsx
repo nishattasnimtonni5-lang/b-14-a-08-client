@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-[#04100e] font-sans text-white">
+    <div className="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-900">
       <Navbar />
       <main className="flex-1">
         <Banner />

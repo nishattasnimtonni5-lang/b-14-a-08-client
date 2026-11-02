@@ -43,12 +43,14 @@ export function BookingForm({studioId}:{studioId:string}) {
       time: "",
     },
   })
-
+console.log("Studio ID:", studioId);
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try{
         const res=await fetch("http://localhost:5000/api/bookings"
         ,{
             method:"POST",
+           
+           credentials:"include",
             headers:{
                 "Content-Type":"application/json"
             },
@@ -58,8 +60,12 @@ export function BookingForm({studioId}:{studioId:string}) {
                 time:data.time
             })
         })
+        const result = await res.json();
+
+console.log("Status:", res.status);
+console.log("Response:", result)
         if(!res.ok){
-          throw new Error("Booking failed")
+          throw new Error(result.message||"Booking failed")
         }
     
     toast.success("Booking submitted successfully!", {
@@ -70,8 +76,10 @@ export function BookingForm({studioId}:{studioId:string}) {
     form.reset();
     setShowForm(false);
   } catch (error){
-toast.error("Failed to submit booking.Please try again.")
-console.error(error)
+     const message =
+    error instanceof Error ? error.message : "Unknown error";
+toast.error( message)
+console.error("Booking error:",error)
   }
   }
 if(!showForm){

@@ -43,7 +43,7 @@ const socials: { label: string; icon: ReactNode }[] = [
 
 const Footer = () => {
   return (
-    <footer className="border-t border-white/5 bg-[#040d0c]">
+    <footer className="border-t border-slate-200 bg-white">
       <div className="mx-auto flex max-w-[1280px] flex-col items-center justify-between gap-6 px-6 py-8 lg:flex-row lg:px-8">
         {/* Brand */}
         <div className="flex items-center gap-2">
@@ -52,7 +52,7 @@ const Footer = () => {
           </span>
           <span className="text-lg font-bold tracking-tight">
             <span className="text-emerald-400">Studio</span>
-            <span className="text-white">Space</span>
+            <span className="text-slate-900">Space</span>
           </span>
           <span className="ml-3 hidden text-xs text-slate-500 sm:inline">
             Creative spaces. Endless possibilities.
@@ -65,7 +65,7 @@ const Footer = () => {
             <Link
               key={label}
               href={hrefs[idx]}
-              className="text-xs text-slate-400 transition-colors hover:text-emerald-400"
+              className="text-xs text-slate-600 transition-colors hover:text-emerald-600"
             >
               {label}
             </Link>
@@ -79,7 +79,7 @@ const Footer = () => {
               key={label}
               href="#"
               aria-label={label}
-              className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-slate-400 transition-colors hover:border-emerald-400 hover:text-emerald-400"
+              className="grid h-8 w-8 place-items-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-emerald-500 hover:text-emerald-600"
             >
               {icon}
             </a>
@@ -87,7 +87,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="border-t border-white/5 py-4">
+      <div className="border-t border-slate-200 py-4">
         <p className="mx-auto max-w-[1280px] px-6 text-center text-[11px] text-slate-500 lg:px-8">
           © {new Date().getFullYear()} StudioSpace. All rights reserved.
         </p>

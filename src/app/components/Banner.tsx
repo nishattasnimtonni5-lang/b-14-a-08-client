@@ -44,7 +44,7 @@ const Banner = () => {
   const next = () => setI((v) => (v + 1) % slides.length);
 
   return (
-    <section className="relative min-h-[640px] w-full overflow-hidden bg-[#04100e]">
+    <section className="relative min-h-[640px] w-full overflow-hidden bg-slate-50">
       {/* Background image */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -53,21 +53,21 @@ const Banner = () => {
         className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
       />
       {/* Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#04100e] via-[#04100e]/85 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#04100e] via-transparent to-[#04100e]/60" />
+      <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-white/70 via-transparent to-white/30" />
       <div className="absolute -left-40 -top-24 h-96 w-96 rounded-full bg-emerald-500/15 blur-3xl" />
 
       <div className="relative mx-auto flex min-h-[640px] max-w-[1280px] flex-col justify-center px-6 py-20 lg:px-8">
         <p className="mb-5 text-xs font-bold tracking-[0.28em] text-emerald-400">
           {slide.eyebrow}
         </p>
-        <h1 className="max-w-2xl text-5xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
+        <h1 className="max-w-2xl text-5xl font-extrabold leading-[1.05] tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
           {slide.line1}
           <br />
           <span className="text-emerald-400">{slide.line2}</span>
         </h1>
-        <h2 className="mt-6 text-2xl font-bold text-white">{slide.sub}</h2>
-        <p className="mt-3 max-w-lg text-base text-slate-300">{slide.text}</p>
+        <h2 className="mt-6 text-2xl font-bold text-slate-900">{slide.sub}</h2>
+        <p className="mt-3 max-w-lg text-base text-slate-700">{slide.text}</p>
 
         <div className="mt-9 flex flex-wrap items-center gap-4">
           <Link
@@ -79,7 +79,7 @@ const Banner = () => {
           </Link>
           <Link
             href="/host"
-            className="inline-flex items-center rounded-full border border-white/25 bg-white/5 px-8 py-3.5 text-sm font-semibold text-white backdrop-blur transition-colors hover:border-emerald-400 hover:text-emerald-400"
+            className="inline-flex items-center rounded-full border border-slate-300 bg-white/60 px-8 py-3.5 text-sm font-semibold text-slate-800 backdrop-blur transition-colors hover:border-emerald-500 hover:text-emerald-700"
           >
             Host Your Space
           </Link>
@@ -90,19 +90,19 @@ const Banner = () => {
           <button
             onClick={prev}
             aria-label="Previous slide"
-            className="grid h-10 w-10 place-items-center rounded-full border border-white/20 text-white transition-colors hover:border-emerald-400 hover:text-emerald-400"
+            className="grid h-10 w-10 place-items-center rounded-full border border-slate-400 text-slate-800 transition-colors hover:border-emerald-500 hover:text-emerald-700"
           >
             <ChevronLeft size={18} />
           </button>
           <button
             onClick={next}
             aria-label="Next slide"
-            className="grid h-10 w-10 place-items-center rounded-full border border-white/20 text-white transition-colors hover:border-emerald-400 hover:text-emerald-400"
+            className="grid h-10 w-10 place-items-center rounded-full border border-slate-400 text-slate-800 transition-colors hover:border-emerald-500 hover:text-emerald-700"
           >
             <ChevronRight size={18} />
           </button>
-          <span className="text-sm font-medium text-slate-300">
-            <span className="text-white">{String(i + 1).padStart(2, "0")}</span> / 0{slides.length}
+          <span className="text-sm font-medium text-slate-700">
+            <span className="text-slate-900">{String(i + 1).padStart(2, "0")}</span> / 0{slides.length}
           </span>
           <div className="flex items-center gap-2">
             {slides.map((_, idx) => (
@@ -111,7 +111,7 @@ const Banner = () => {
                 onClick={() => setI(idx)}
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`h-1.5 rounded-full transition-all ${
-                  idx === i ? "w-12 bg-emerald-400" : "w-8 bg-white/20 hover:bg-white/40"
+                  idx === i ? "w-12 bg-emerald-500" : "w-8 bg-slate-400/60 hover:bg-slate-500/70"
                 }`}
               />
             ))}
@@ -120,13 +120,13 @@ const Banner = () => {
       </div>
 
       {/* Floating tag card */}
-      <div className="absolute bottom-14 right-6 hidden items-center gap-4 rounded-2xl border border-white/10 bg-black/40 p-4 pr-6 backdrop-blur-md lg:flex">
+      <div className="absolute bottom-14 right-6 hidden items-center gap-4 rounded-2xl border border-slate-200 bg-white/90 p-4 pr-6 shadow-lg backdrop-blur-md lg:flex">
         <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 text-[#04100e]">
           <Camera size={20} />
         </span>
         <span className="leading-tight">
-          <span className="block text-sm font-semibold text-white">{slide.tag}</span>
-          <span className="block text-xs text-slate-400">{slide.tagSub}</span>
+          <span className="block text-sm font-semibold text-slate-900">{slide.tag}</span>
+          <span className="block text-xs text-slate-600">{slide.tagSub}</span>
         </span>
         <ArrowRight size={16} className="text-emerald-400" />
       </div>

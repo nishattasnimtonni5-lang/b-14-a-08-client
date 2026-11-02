@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input"
 
 import { authClient } from "@/app/lib/auth-client"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 
@@ -26,10 +26,9 @@ export default function SignInForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
- 
-  
-  
-    const handleSubmit=async(e:React.FormEvent<HTMLFormElement>)=>{
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   
       e.preventDefault();
   
@@ -43,10 +42,9 @@ export default function SignInForm({
   })
 
   if(data){
-toast.success("Successfully signed in")
-  redirect('/')
-
-}
+    toast.success("Successfully signed in")
+    router.push("/")
+  }
 
 if(error){
 

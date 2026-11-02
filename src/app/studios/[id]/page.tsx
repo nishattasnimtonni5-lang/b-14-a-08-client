@@ -27,9 +27,9 @@ const StatusMessage = ({
   description: string;
 }) => (
   <main className="flex flex-1 items-center justify-center px-6 py-24">
-    <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0a1615] p-8 text-center">
-      <h1 className="text-2xl font-bold text-white">{title}</h1>
-      <p className="mt-2 text-sm text-slate-400">{description}</p>
+    <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 text-center">
+      <h1 className="text-2xl font-bold text-slate-900">{title}</h1>
+      <p className="mt-2 text-sm text-slate-600">{description}</p>
       <Link
         href="/"
         className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-6 py-2.5 text-sm font-semibold text-[#04100e] transition-transform hover:scale-105"
@@ -60,7 +60,7 @@ const detailsPage = async({params}:Props) => {
   // so we must check the parsed body, not only res.ok.
   if (!studio) {
     return (
-      <div className="flex min-h-screen flex-col bg-[#04100e] font-sans text-white">
+      <div className="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-900">
         <Navbar />
         {fetchFailed ? (
           <StatusMessage
@@ -79,7 +79,7 @@ const detailsPage = async({params}:Props) => {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#04100e] font-sans text-white">
+    <div className="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-900">
       <Navbar />
 
       <main className="flex-1">
@@ -87,7 +87,7 @@ const detailsPage = async({params}:Props) => {
           {/* Back link */}
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 text-sm font-semibold text-emerald-400 transition-colors hover:text-emerald-300"
+            className="group inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 transition-colors hover:text-emerald-600"
           >
             <ArrowLeft
               size={16}
@@ -99,14 +99,14 @@ const detailsPage = async({params}:Props) => {
           {/* Details: image on the left, info + booking card on the right */}
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.1fr_1fr]">
             {/* Image + category badge */}
-            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-[#0a1615] lg:aspect-auto">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-slate-200 bg-white lg:aspect-auto">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={studio.image}
                 alt={studio.name}
                 className="h-full w-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a1615]/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-transparent to-transparent" />
               <span
                 className={`absolute left-4 top-4 rounded-full px-3 py-1 text-[11px] font-semibold text-white ${
                   badgeColors[studio.category] ?? "bg-emerald-500"
@@ -119,13 +119,13 @@ const detailsPage = async({params}:Props) => {
             {/* Info + booking */}
             <div className="flex flex-col gap-6">
               <div>
-                <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
                   {studio.name}
                 </h1>
-                <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-400">
+                <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-600">
                   <span className="flex items-center gap-1.5">
                     <Star size={15} className="fill-amber-400 text-amber-400" />
-                    <span className="font-medium text-slate-200">
+                    <span className="font-medium text-slate-700">
                       {studio.rating.toFixed(1)}
                     </span>
                     <span>({studio.reviews} reviews)</span>
@@ -138,15 +138,14 @@ const detailsPage = async({params}:Props) => {
               </div>
 
               {/* Booking card */}
-              <div className="rounded-2xl border border-white/10 bg-[#0a1615] p-6">
-                <p className="text-sm text-slate-300">
+              <div className="rounded-2xl border border-slate-200 bg-white p-6">
+                <p className="text-sm text-slate-600">
                   <span className="text-3xl font-extrabold text-emerald-400">
                     ${studio.price}
                   </span>
-                  <span className="text-slate-400"> / hr</span>
+                  <span className="text-slate-500"> / hr</span>
                 </p>
-                {/* Swap this <button> for a <Link href={...}> when the booking page exists. */}
-                <BookingForm/>
+                <BookingForm studioId={id} />
               </div>
             </div>
           </div>

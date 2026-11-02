@@ -1,5 +1,6 @@
 'use client'
 import { authClient } from "@/app/lib/auth-client"
+import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 
@@ -31,7 +32,6 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { cn } from "cn"
-import { redirect } from "next/navigation"
 import { useState } from "react"
 
 import { toast } from "sonner"
@@ -43,36 +43,38 @@ export default function SignUpForm({
   ...props
 
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
-
-
-  const [loading,setLoading]=useState(false);
-
-  const handleSubmit=async(e:React.FormEvent<HTMLFormElement>)=>{
-
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-const formData=new FormData(e.currentTarget)
+    setLoading(true);
 
-const user=Object.fromEntries(formData.entries()) as {name:string,image:string,email:string,password:string}
+    const formData = new FormData(e.currentTarget);
 
-const {data,error}=await authClient.signUp.email({
+    const user = Object.fromEntries(formData.entries()) as {
+      name: string;
+      image: string;
+      email: string;
+      password: string;
+    };
 
-  ...user,
+    const { data, error } = await authClient.signUp.email({
+      ...user,
+    });
 
-})
+    if (data) {
+      toast.success("Account created successfully");
+      router.push('/');
+    }
 
-if(data){
-toast.success("Account created successfully")
-  redirect('/')
+    if (error) {
+      console.log(error);
+      toast.error(error.message || "sign up failed");
+    }
 
-}
-
-if(error){
-
-  console.log(error)
- toast.error(error.message||"sign up failed")
-}
+    setLoading(false);
 
  
 
