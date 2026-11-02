@@ -8,7 +8,7 @@ const explorePage = async() => {
   let error = false;
 
   try {
-    const res=await fetch("https://b-14-a-08-server.vercel.app//api/studios")
+    const res=await fetch(`http://localhost:5000/api/studios`)
     studios=await res.json()
     error = !res.ok;
   } catch {

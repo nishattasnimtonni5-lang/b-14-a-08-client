@@ -3,6 +3,7 @@ import { ArrowLeft, MapPin, Star } from "lucide-react";
 import { Studio } from "@/data/studios";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { BookingForm } from "../bookingform";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -48,7 +49,7 @@ const detailsPage = async({params}:Props) => {
   let fetchFailed = false;
 
   try {
-    const res = await fetch(`https://b-14-a-08-server.vercel.app/api/studios/${id}`);
+    const res = await fetch(`http://localhost:5000/api/studios/${id}`);
     studio = await res.json()
     fetchFailed = !res.ok;
   } catch {
@@ -145,12 +146,7 @@ const detailsPage = async({params}:Props) => {
                   <span className="text-slate-400"> / hr</span>
                 </p>
                 {/* Swap this <button> for a <Link href={...}> when the booking page exists. */}
-                <button
-                  type="button"
-                  className="mt-5 w-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 py-3 text-sm font-semibold text-[#04100e] shadow-[0_0_25px_rgba(16,185,129,0.35)] transition-transform hover:scale-[1.02]"
-                >
-                  Book This Studio
-                </button>
+                <BookingForm/>
               </div>
             </div>
           </div>

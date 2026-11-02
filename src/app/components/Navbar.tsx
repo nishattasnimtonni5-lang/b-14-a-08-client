@@ -1,19 +1,26 @@
 "use client";
-
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { authClient } from "../lib/auth-client";
+import { Popover, PopoverContent ,PopoverTrigger} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 const links = [
   { label: "Home", href: "/", active: true },
   { label: "Explore Studios", href: "/explore" },
+  { label: "My bookings", href: "/bookingsPage" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "About Us", href: "/about" },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-
+const {data:session}=authClient.useSession();
+const user=session?.user;
+const handleSignOut=async ()=>{
+  await authClient.signOut();
+}
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-[#050c0b]/90 backdrop-blur-md">
       <div className="mx-auto flex h-[68px] max-w-[1280px] items-center justify-between px-6 lg:px-8">
@@ -49,21 +56,45 @@ const Navbar = () => {
         </nav>
 
         {/* Actions */}
+        
+          {user ?(
+            <Popover>
+              <PopoverTrigger>
+        <Avatar >
+  <AvatarImage referrerPolicy="no-referrer" src={user?.image as string}/>
+  <AvatarFallback>{user?.name.charAt(0).toUpperCase()|| "U"}</AvatarFallback>
+</Avatar>
+</PopoverTrigger>
+<PopoverContent className="w-64">
+  <div className="space-y-2">
+<p className="font-semibold">{user.name}</p>
+<p className="text-sm text-muted-foreground">{user.email}</p>
+<Button variant="destructive"
+className="w-full"
+onClick={handleSignOut}>
+  Sign out
+  </Button>
+  </div>
+  </PopoverContent>
+  </Popover>
+):(
+
         <div className="hidden items-center gap-4 md:flex">
           <Link
-            href="/login"
+            href="/signin"
             className="text-sm font-medium text-slate-200 transition-colors hover:text-emerald-400"
           >
-            Login
+            Sign in
           </Link>
           <Link
-            href="/register"
+            href="/signup"
             className="rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-6 py-2.5 text-sm font-semibold text-[#04100e] shadow-[0_0_25px_rgba(16,185,129,0.35)] transition-transform hover:scale-105"
           >
-            Register
+            Sign Up
           </Link>
-        </div>
-
+          </div>
+       
+)}
         {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
@@ -93,20 +124,27 @@ const Navbar = () => {
               </Link>
             ))}
           </nav>
+           {user ?(
+        <Avatar >
+  <AvatarImage referrerPolicy="no-referrer" src={user?.image as string}/>
+  <AvatarFallback>{user?.name.charAt(0).toUpperCase()|| "U"}</AvatarFallback>
+</Avatar>
+):(
           <div className="mt-4 flex items-center gap-3">
             <Link
-              href="/login"
+              href="/signin"
               className="flex-1 rounded-full border border-white/15 py-2.5 text-center text-sm font-medium text-slate-200"
             >
-              Login
+              Sign in
             </Link>
             <Link
-              href="/register"
+              href="/signup"
               className="flex-1 rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 py-2.5 text-center text-sm font-semibold text-[#04100e]"
             >
-              Register
+              Sign Up
             </Link>
           </div>
+)}
         </div>
       )}
     </header>
