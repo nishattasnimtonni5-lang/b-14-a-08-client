@@ -7,7 +7,16 @@ import { authClient } from '@/app/lib/auth-client';
 export default function BookingsPage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
-
+type Booking = {
+    _id: string;
+    studioId: string;
+    date: string;
+    time: string;
+    status: string;
+  };
+  const [bookings,setBookings]=useState<Booking[]>([]);
+  const [loading,setLoading]=useState(true);
+  
   useEffect(() => {
     if (!isPending && !session) {
       router.replace('/signin');
