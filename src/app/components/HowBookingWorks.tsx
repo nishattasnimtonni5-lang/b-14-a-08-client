@@ -10,36 +10,55 @@ const icons = {
 };
 
 const accents: Record<BookingStep["icon"], string> = {
-  search: "bg-emerald-500/15 text-emerald-400 group-hover:shadow-[0_0_24px_rgba(16,185,129,0.4)]",
-  grid: "bg-indigo-500/15 text-indigo-400 group-hover:shadow-[0_0_24px_rgba(99,102,241,0.4)]",
-  calendar: "bg-sky-500/15 text-sky-400 group-hover:shadow-[0_0_24px_rgba(14,165,233,0.4)]",
-  sparkles: "bg-pink-500/15 text-pink-400 group-hover:shadow-[0_0_24px_rgba(236,72,153,0.4)]",
+  search: "bg-emerald-500/15 text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white group-hover:shadow-[0_0_24px_rgba(16,185,129,0.45)]",
+  grid: "bg-indigo-500/15 text-indigo-600 group-hover:bg-indigo-500 group-hover:text-white group-hover:shadow-[0_0_24px_rgba(99,102,241,0.45)]",
+  calendar: "bg-sky-500/15 text-sky-600 group-hover:bg-sky-500 group-hover:text-white group-hover:shadow-[0_0_24px_rgba(14,165,233,0.45)]",
+  sparkles: "bg-pink-500/15 text-pink-600 group-hover:bg-pink-500 group-hover:text-white group-hover:shadow-[0_0_24px_rgba(236,72,153,0.45)]",
+};
+
+const stepAccents: Record<BookingStep["icon"], string> = {
+  search: "group-hover:text-emerald-500",
+  grid: "group-hover:text-indigo-500",
+  calendar: "group-hover:text-sky-500",
+  sparkles: "group-hover:text-pink-500",
 };
 
 const StepCard = ({ step }: { step: BookingStep }) => {
   const Icon = icons[step.icon];
 
   return (
-    <div className="group relative flex flex-1 flex-col items-center rounded-2xl border border-slate-200 bg-white p-6 text-center transition-all duration-300 hover:-translate-y-1.5 hover:border-emerald-400/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.22)]">
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-emerald-400/60 hover:shadow-[0_0_30px_rgba(16,185,129,0.22)]">
+      {/* Numbered step indicator */}
       <span
-        className={`mb-4 grid h-16 w-16 place-items-center rounded-2xl transition-shadow duration-300 ${
-          accents[step.icon]
-        }`}
+        className={`absolute -right-2 -top-4 text-[64px] font-extrabold leading-none tracking-tight text-slate-100 transition-colors duration-300 ${stepAccents[step.icon]}`}
+        aria-hidden="true"
       >
-        <Icon size={26} />
+        {step.step}
       </span>
-      <span className="mb-2 text-[11px] font-bold tracking-[0.2em] text-emerald-700">
+
+      <span
+        className={`relative mb-5 grid h-14 w-14 place-items-center rounded-2xl transition-all duration-300 ${accents[step.icon]}`}
+      >
+        <Icon size={24} />
+      </span>
+
+      <span className="mb-1.5 text-[11px] font-bold tracking-[0.2em] text-emerald-600">
         STEP {step.step}
       </span>
       <h3 className="text-base font-semibold text-slate-900">{step.title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.description}</p>
+      <p className="mt-2 text-sm leading-relaxed text-slate-600">
+        {step.description}
+      </p>
+
+      {/* Bottom accent line */}
+      <span className="mt-5 h-1 w-0 rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 transition-all duration-300 group-hover:w-full" />
     </div>
   );
 };
 
 const HowBookingWorks = () => {
   return (
-    <section id="how-it-works" className="bg-slate-50 pb-20">
+    <section id="how-it-works" className="bg-slate-50 py-4 pb-20">
       <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
         <div className="mb-8">
           <span className="mb-3 block h-[3px] w-10 rounded-full bg-emerald-400" />
@@ -51,17 +70,9 @@ const HowBookingWorks = () => {
           </p>
         </div>
 
-        <div className="flex flex-col gap-4 md:flex-row md:items-stretch">
-          {bookingSteps.map((step, idx) => (
-            <div key={step.id} className="flex flex-1 items-center gap-4">
-              <StepCard step={step} />
-              {idx < bookingSteps.length - 1 && (
-                <ArrowRight
-                  size={18}
-                  className="hidden shrink-0 text-emerald-400/60 md:block"
-                />
-              )}
-            </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {bookingSteps.map((step) => (
+            <StepCard key={step.id} step={step} />
           ))}
         </div>
 

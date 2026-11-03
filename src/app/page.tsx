@@ -3,6 +3,7 @@ import Banner from "./components/Banner";
 import FeaturedStudios from "./components/FeaturedStudios";
 import BrowseByCategories from "./components/BrowseByCategories";
 import HowBookingWorks from "./components/HowBookingWorks";
+import AboutUs from "./components/AboutUs";
 import HostGuarantee from "./components/HostGuarantee";
 import Footer from "./components/Footer";
 
@@ -14,6 +15,7 @@ export default function Home() {
         <Banner />
         <FeaturedStudios />
         <BrowseByCategories />
+        <AboutUs />
         <HowBookingWorks />
         <HostGuarantee />
         {/* Add the rest of the sections here */}

@@ -14,28 +14,32 @@ export const bookingSteps: BookingStep[] = [
     id: "1",
     step: "01",
     title: "Explore Studios",
-    description: "Browse and find the perfect studio for your project.",
+    description:
+      "Browse available studios and explore their details, facilities, and pricing.",
     icon: "search",
   },
   {
     id: "2",
     step: "02",
-    title: "Choose Your Space",
-    description: "Pick the studio that fits your creative vision.",
+    title: "Choose Your Studio",
+    description:
+      "Select your preferred studio based on your needs and budget.",
     icon: "grid",
   },
   {
     id: "3",
     step: "03",
-    title: "Book Your Time",
-    description: "Select your dates and secure the booking in minutes.",
+    title: "Book Your Session",
+    description:
+      "Select your preferred date and time and submit the booking form.",
     icon: "calendar",
   },
   {
     id: "4",
     step: "04",
-    title: "Create Something Amazing",
-    description: "Bring your ideas to life in the perfect space.",
+    title: "Enjoy Your Experience",
+    description:
+      "Visit the studio at your scheduled time and enjoy your session.",
     icon: "sparkles",
   },
 ];
