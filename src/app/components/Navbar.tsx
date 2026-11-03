@@ -18,6 +18,11 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
 const {data:session}=authClient.useSession();
 const user=session?.user;
+const avatarImage = user?.image?.trim();
+const avatarInitial =
+  user?.name?.trim().charAt(0).toUpperCase() ||
+  user?.email?.trim().charAt(0).toUpperCase() ||
+  "U";
 const handleSignOut=async ()=>{
   await authClient.signOut();
 }
@@ -61,9 +66,16 @@ const handleSignOut=async ()=>{
             <Popover>
               <PopoverTrigger>
         <Avatar >
-  <AvatarImage referrerPolicy="no-referrer" src={user?.image as string}/>
-  <AvatarFallback>{user?.name.charAt(0).toUpperCase()|| "U"}</AvatarFallback>
-</Avatar>
+              <AvatarFallback>{avatarInitial}</AvatarFallback>
+              {avatarImage && (
+                <AvatarImage
+                  className="data-[loading]:invisible data-[error]:invisible"
+                  keepMounted
+                  referrerPolicy="no-referrer"
+                  src={avatarImage}
+                />
+              )}
+            </Avatar>
 </PopoverTrigger>
 <PopoverContent className="w-64">
   <div className="space-y-2">
@@ -126,8 +138,15 @@ onClick={handleSignOut}>
           </nav>
            {user ?(
         <Avatar >
-  <AvatarImage referrerPolicy="no-referrer" src={user?.image as string}/>
-  <AvatarFallback>{user?.name.charAt(0).toUpperCase()|| "U"}</AvatarFallback>
+  <AvatarFallback>{avatarInitial}</AvatarFallback>
+  {avatarImage && (
+    <AvatarImage
+      className="data-[loading]:invisible data-[error]:invisible"
+      keepMounted
+      referrerPolicy="no-referrer"
+      src={avatarImage}
+    />
+  )}
 </Avatar>
 ):(
           <div className="mt-4 flex items-center gap-3">

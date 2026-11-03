@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Star, MapPin, ArrowRight } from "lucide-react";
 import { Studio } from "@/data/studios";
+import { fetchStudios } from "../lib/studios";
 export const dynamic='force-dynamic'
 
 // Maps a category label to its badge color.
@@ -62,9 +63,15 @@ export const StudioCard = ({ studio }: { studio: Studio }) => (
 );
 
 const FeaturedStudios = async() => {
-  const res=await fetch("https://b-14-a-08-server-x2zf.vercel.app/api/studios")
- const studios=await res.json()
-   
+  let studios: Studio[] = [];
+  let errorMessage = "";
+
+  try {
+    studios = await fetchStudios();
+  } catch (error) {
+    errorMessage =
+      error instanceof Error ? error.message : "Unable to load studios.";
+  }
 
  return (
     <section className="bg-slate-50 py-20">
@@ -89,12 +96,17 @@ const FeaturedStudios = async() => {
           </Link>
         </div>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-          {studios.map((studio:Studio) => (
-            <StudioCard key={studio.id} studio={studio} />
-          ))}
-        </div>
+        {errorMessage ? (
+          <p role="alert" className="text-sm text-slate-600">
+            {errorMessage}
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+            {studios.map((studio) => (
+              <StudioCard key={studio.id} studio={studio} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

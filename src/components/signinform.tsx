@@ -27,6 +27,7 @@ export default function SignInForm({
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
+  const { refetch: refetchSession } = authClient.useSession();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   
@@ -42,20 +43,16 @@ export default function SignInForm({
   })
 
   if(data){
+    await refetchSession();
     toast.success("Successfully signed in")
     router.push("/")
   }
 
 if(error){
 
-  console.log(error)
  toast.error(error.message||"sign in failed")
 }
 
-  
-  
-  console.log(formData);
-    console.log(user);
     }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

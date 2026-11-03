@@ -1,5 +1,11 @@
 import { createAuthClient } from "better-auth/react";
 
+const authBaseURL =
+  typeof window === "undefined"
+    ? "http://localhost:3000/api/auth"
+    : new URL("/api/auth", window.location.origin).toString();
+
 export const authClient = createAuthClient({
-  baseURL: "https://b-14-a-08-server-x2zf.vercel.app",
+  baseURL: authBaseURL,
 });
+console.log("AUTH CLIENT FILE LOADED");

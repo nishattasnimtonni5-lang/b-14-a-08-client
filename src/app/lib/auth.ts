@@ -8,8 +8,10 @@ const db = client.db("studio-space");
 
 export const auth = betterAuth({
     secret: process.env.BETTER_AUTH_SECRET,
-     emailAndPassword: { 
-    enabled: true, 
-  }, 
-  database: mongodbAdapter(db),
+    trustedOrigins: (request) =>
+      request ? [new URL(request.url).origin] : [],
+    emailAndPassword: {
+      enabled: true, 
+    },
+    database: mongodbAdapter(db),
 });
