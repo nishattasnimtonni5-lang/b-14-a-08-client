@@ -1,13 +1,14 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { authClient } from "../lib/auth-client";
 import { Popover, PopoverContent ,PopoverTrigger} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 const links = [
-  { label: "Home", href: "/", active: true },
+  { label: "Home", href: "/" },
   { label: "Explore Studios", href: "/explore" },
   { label: "My bookings", href: "/myBookings" },
   { label: "How It Works", href: "/how-it-works" },
@@ -16,6 +17,7 @@ const links = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 const {data:session}=authClient.useSession();
 const user=session?.user;
 const avatarImage = user?.image?.trim();
@@ -42,22 +44,25 @@ const handleSignOut=async ()=>{
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-8 md:flex">
-          {links.map((l) => (
+          {links.map((l) => {
+            const active = pathname === l.href;
+            return (
             <Link
               key={l.label}
               href={l.href}
               className={`relative py-2 text-sm font-medium transition-colors ${
-                l.active
+                active
                   ? "text-emerald-400"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
               {l.label}
-              {l.active && (
+              {active && (
                 <span className="absolute -bottom-[2px] left-0 h-[2px] w-full rounded-full bg-emerald-400" />
               )}
             </Link>
-          ))}
+            );
+          })}
         </nav>
 
         {/* Actions */}
@@ -121,20 +126,23 @@ onClick={handleSignOut}>
       {open && (
         <div className="border-t border-slate-200 bg-white px-6 py-4 md:hidden">
           <nav className="flex flex-col gap-1">
-            {links.map((l) => (
+            {links.map((l) => {
+              const active = pathname === l.href;
+              return (
               <Link
                 key={l.label}
                 href={l.href}
                 onClick={() => setOpen(false)}
                 className={`rounded-lg px-3 py-2.5 text-sm font-medium ${
-                  l.active
+                  active
                     ? "bg-emerald-500/10 text-emerald-400"
                     : "text-slate-600 hover:bg-slate-100"
                 }`}
               >
                 {l.label}
               </Link>
-            ))}
+              );
+            })}
           </nav>
            {user ?(
         <Avatar >
