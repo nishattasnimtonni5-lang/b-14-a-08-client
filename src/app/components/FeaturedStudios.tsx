@@ -1,7 +1,8 @@
+
 import Link from "next/link";
 import { Star, MapPin, ArrowRight } from "lucide-react";
 import { Studio } from "@/data/studios";
-
+export const dynamic='force-dynamic'
 
 // Maps a category label to its badge color.
 const badgeColors: Record<string, string> = {
@@ -61,9 +62,11 @@ export const StudioCard = ({ studio }: { studio: Studio }) => (
 );
 
 const FeaturedStudios = async() => {
-  const res=await fetch("http://localhost:5000/api/studios")
+  const res=await fetch("https://b-14-a-08-server-x2zf.vercel.app/api/studios")
  const studios=await res.json()
-  return (
+   
+
+ return (
     <section className="bg-slate-50 py-20">
       <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
         {/* Heading */}

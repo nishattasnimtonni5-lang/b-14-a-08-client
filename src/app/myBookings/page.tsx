@@ -1,9 +1,10 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/app/lib/auth-client';
-
+export const dynamic='force-dynamic'
 export default function BookingsPage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
@@ -31,7 +32,7 @@ export default function BookingsPage() {
     async function fetchBookings() {
       try {
         const response = await fetch(
-          'http://localhost:5000/api/my-bookings',
+          'https://b-14-a-08-server-x2zf.vercel.app/api/my-bookings',
           {
             credentials: 'include',
           }

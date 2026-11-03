@@ -1,14 +1,15 @@
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { StudioCard } from "../components/FeaturedStudios";
 import { Studio } from "@/data/studios";
-
+export const dynamic='force-dynamic'
 const explorePage = async() => {
   let studios: Studio[] = [];
   let error = false;
 
   try {
-    const res=await fetch(`http://localhost:5000/api/studios`)
+    const res=await fetch(`https://b-14-a-08-server-x2zf.vercel.app/api/studios`)
     studios=await res.json()
     error = !res.ok;
   } catch {

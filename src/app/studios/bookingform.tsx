@@ -22,7 +22,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-
+export const dynamic='force-dynamic'
 const formSchema = z.object({
   date: z
     .string()
@@ -46,7 +46,7 @@ export function BookingForm({studioId}:{studioId:string}) {
 console.log("Studio ID:", studioId);
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try{
-        const res=await fetch("http://localhost:5000/api/bookings"
+        const res=await fetch("https://b-14-a-08-server-x2zf.vercel.app/api/bookings"
         ,{
             method:"POST",
            

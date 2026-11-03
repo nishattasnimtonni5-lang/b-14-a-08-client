@@ -1,10 +1,11 @@
+
 import Link from "next/link";
 import { ArrowLeft, MapPin, Star } from "lucide-react";
 import { Studio } from "@/data/studios";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { BookingForm } from "../bookingform";
-
+export const dynamic='force-dynamic'
 type Props = {
   params: Promise<{ id: string }>;
 };
@@ -49,15 +50,14 @@ const detailsPage = async({params}:Props) => {
   let fetchFailed = false;
 
   try {
-    const res = await fetch(`http://localhost:5000/api/studios/${id}`);
+    const res = await fetch(`https://b-14-a-08-server-x2zf.vercel.app/api/studios/${id}`);
     studio = await res.json()
     fetchFailed = !res.ok;
   } catch {
     fetchFailed = true;
   }
 
-  // The API answers `null` (with HTTP 200) when no studio matches the id,
-  // so we must check the parsed body, not only res.ok.
+  
   if (!studio) {
     return (
       <div className="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-900">
@@ -84,7 +84,7 @@ const detailsPage = async({params}:Props) => {
 
       <main className="flex-1">
         <div className="mx-auto max-w-[1280px] px-6 py-10 lg:px-8">
-          {/* Back link */}
+        
           <Link
             href="/"
             className="group inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 transition-colors hover:text-emerald-600"
@@ -96,11 +96,11 @@ const detailsPage = async({params}:Props) => {
             Back to Studios
           </Link>
 
-          {/* Details: image on the left, info + booking card on the right */}
+        
           <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1.1fr_1fr]">
-            {/* Image + category badge */}
+          
             <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-slate-200 bg-white lg:aspect-auto">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+           
               <img
                 src={studio.image}
                 alt={studio.name}
@@ -116,7 +116,7 @@ const detailsPage = async({params}:Props) => {
               </span>
             </div>
 
-            {/* Info + booking */}
+         
             <div className="flex flex-col gap-6">
               <div>
                 <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
