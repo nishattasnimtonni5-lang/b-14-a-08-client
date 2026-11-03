@@ -70,19 +70,10 @@ export default function SignUpForm({
     }
 
     if (error) {
-      console.log(error);
       toast.error(error.message || "sign up failed");
     }
 
     setLoading(false);
-
- 
-
-
-
-
-console.log(formData);
-  console.log(user);
   }
   
   return (
