@@ -1,17 +1,29 @@
 import { betterAuth } from "better-auth";
-
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
-import { MongoClient } from 'mongodb';
+import { MongoClient } from "mongodb";
 
-const client = new MongoClient(process.env.MONGODB_URI as string);
+const client = new MongoClient(process.env.MONGODB_URI);
+
+await client.connect();
+
 const db = client.db("studio-space");
 
 export const auth = betterAuth({
-    secret: process.env.BETTER_AUTH_SECRET,
-    trustedOrigins: (request) =>
-      request ? [new URL(request.url).origin] : [],
-    emailAndPassword: {
-      enabled: true, 
+  baseURL: process.env.BETTER_AUTH_URL,
+  secret: process.env.BETTER_AUTH_SECRET,
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://b-14-a-08-client.vercel.app",
+    "https://b-14-a-08-client-n5a49h3ma-a-06.vercel.app",
+  ],
+  database: mongodbAdapter(db),
+  emailAndPassword: {
+    enabled: true,
+  },
+  advanced: {
+    defaultCookieAttributes: {
+      sameSite: "none",
+      secure: true,
     },
-    database: mongodbAdapter(db),
+  },
 });
