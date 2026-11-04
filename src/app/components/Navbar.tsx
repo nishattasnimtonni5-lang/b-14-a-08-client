@@ -12,6 +12,7 @@ const links = [
   { label: "Explore Studios", href: "/explore" },
   { label: "My bookings", href: "/myBookings" },
   { label: "Add studio", href: "/addStudio" },
+  { label: "My listing", href: "/myListing" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "About Us", href: "/about" },
 ];
@@ -65,14 +66,7 @@ const handleSignOut = async () => {
             </Link>
             );
           })}
-          {user && (
-            <button
-              onClick={handleSignOut}
-              className="whitespace-nowrap py-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
-            >
-              Sign out
-            </button>
-          )}
+         
         </nav>
 
         {/* Actions */}
@@ -173,12 +167,7 @@ onClick={handleSignOut}>
                 </p>
                 <p className="truncate text-xs text-slate-500">{user.email}</p>
               </div>
-              <button
-                onClick={handleSignOut}
-                className="shrink-0 rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold text-slate-700 transition-colors hover:border-emerald-500 hover:text-emerald-700"
-              >
-                Sign out
-              </button>
+              
             </div>
           ) : (
             <div className="mt-4 flex items-center gap-3">

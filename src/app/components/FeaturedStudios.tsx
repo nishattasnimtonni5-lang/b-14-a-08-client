@@ -104,9 +104,9 @@ const FeaturedStudios = async() => {
           </p>
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-            {studios.map((studio) => (
-              <StudioCard key={studio.id} studio={studio} />
-            ))}
+            {studios.slice(0, 6).map((studio) => (
+  <StudioCard key={studio.id} studio={studio} />
+))}
           </div>
         )}
       </div>
