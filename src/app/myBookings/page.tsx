@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+
 const API_BASE = "https://b-14-a-08-server-x2zf.vercel.app";
 
 type Booking = {
@@ -27,7 +28,7 @@ type Booking = {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-const {data,error:jwtError}=authClient.token();
+
   const fetchBookings = useCallback(async () => {
     try {
       const tokenResponse = await fetch(`${API_BASE}/api/token`, {
