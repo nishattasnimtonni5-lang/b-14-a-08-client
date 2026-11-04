@@ -3,8 +3,7 @@ import type { Studio } from "@/data/studios";
 const STUDIOS_API_URL = "https://b-14-a-08-server-x2zf.vercel.app/api/studios";
 
 export async function fetchStudios(): Promise<Studio[]> {
-
-  const response = await fetch(STUDIOS_API_URL);
+  const response = await fetch(STUDIOS_API_URL, { next: { revalidate: 300 } });
 
   if (!response.ok) {
 

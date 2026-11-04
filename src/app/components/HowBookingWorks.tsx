@@ -27,7 +27,7 @@ const StepCard = ({ step }: { step: BookingStep }) => {
   const Icon = icons[step.icon];
 
   return (
-    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-emerald-400/60 hover:shadow-[0_0_30px_rgba(16,185,129,0.22)]">
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-emerald-400/60 hover:shadow-[0_0_30px_rgba(16,185,129,0.22)] sm:p-6">
       {/* Numbered step indicator */}
       <span
         className={`absolute -right-2 -top-4 text-[64px] font-extrabold leading-none tracking-tight text-slate-100 transition-colors duration-300 ${stepAccents[step.icon]}`}
@@ -58,11 +58,11 @@ const StepCard = ({ step }: { step: BookingStep }) => {
 
 const HowBookingWorks = () => {
   return (
-    <section id="how-it-works" className="bg-slate-50 py-4 pb-20">
-      <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
-        <div className="mb-8">
+    <section id="how-it-works" className="bg-slate-50 pb-14 sm:pb-16 lg:pb-20">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 sm:mb-8">
           <span className="mb-3 block h-[3px] w-10 rounded-full bg-emerald-400" />
-          <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">
+          <h2 className="text-xl font-extrabold tracking-tight text-slate-900 sm:text-2xl">
             How Booking Works
           </h2>
           <p className="mt-1.5 text-sm text-slate-600">

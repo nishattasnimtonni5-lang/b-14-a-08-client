@@ -1,5 +1,6 @@
 'use client'
 import { cn } from "cn"
+import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -27,33 +28,46 @@ export default function SignInForm({
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const { refetch: refetchSession } = authClient.useSession();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  
-      e.preventDefault();
-  
-  const formData=new FormData(e.currentTarget)
-  
-  const user=Object.fromEntries(formData.entries()) as {email:string,password:string}
-  
-  const {data,error}=await authClient.signIn.email({
-  ...user
-   
-  })
+    e.preventDefault();
 
-  if(data){
-    await refetchSession();
-    toast.success("Successfully signed in")
-    router.push("/")
-  }
+    if (loading) return;
+    setLoading(true);
 
-if(error){
+    const formData = new FormData(e.currentTarget);
 
- toast.error(error.message||"sign in failed")
-}
+    const user = Object.fromEntries(formData.entries()) as {
+      email: string;
+      password: string;
+    };
 
+    const { data, error } = await authClient.signIn.email({
+      ...user,
+    });
+
+    if (error) {
+      toast.error(error.message || "sign in failed");
+      setLoading(false);
+      return;
     }
+
+    if (data) {
+      await refetchSession();
+      toast.success("Successfully signed in");
+
+      const next = new URLSearchParams(window.location.search).get("next");
+      const target =
+        next && next.startsWith("/") && !next.startsWith("//") ? next : "/";
+
+      router.push(target);
+      return;
+    }
+
+    setLoading(false);
+  };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -89,7 +103,13 @@ if(error){
                 <Input id="password" type="password" name="password" required />
               </Field>
               <Field>
-                <Button className="hover:bg-black hover:text-white" type="submit">Login</Button>
+                <Button
+                  className="hover:bg-black hover:text-white"
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading ? "Logging in..." : "Login"}
+                </Button>
                 <Button className="hover:bg-black hover:text-white"
                  variant="outline" type="button">
                   Login with Google

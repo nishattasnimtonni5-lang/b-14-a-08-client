@@ -37,6 +37,11 @@ const slides = [
   },
 ];
 
+const slideWidths = [800, 1280, 1920];
+
+const buildSrcSet = (src: string) =>
+  slideWidths.map((w) => `${src.replace(/w=\d+/, `w=${w}`)} ${w}w`).join(", ");
+
 const Banner = () => {
   const [i, setI] = useState(0);
   const slide = slides[i];
@@ -44,12 +49,15 @@ const Banner = () => {
   const next = () => setI((v) => (v + 1) % slides.length);
 
   return (
-    <section className="relative min-h-[640px] w-full overflow-hidden bg-slate-50">
+    <section className="relative min-h-[520px] w-full overflow-hidden bg-slate-50 sm:min-h-[560px] lg:min-h-[640px]">
       {/* Background image */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={slide.img}
+        srcSet={buildSrcSet(slide.img)}
+        sizes="100vw"
         alt={slide.tag}
+        fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
       />
       {/* Overlays */}
@@ -57,36 +65,40 @@ const Banner = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-white/70 via-transparent to-white/30" />
       <div className="absolute -left-40 -top-24 h-96 w-96 rounded-full bg-emerald-500/15 blur-3xl" />
 
-      <div className="relative mx-auto flex min-h-[640px] max-w-[1280px] flex-col justify-center px-6 py-20 lg:px-8">
-        <p className="mb-5 text-xs font-bold tracking-[0.28em] text-emerald-400">
+      <div className="relative mx-auto flex min-h-[520px] max-w-[1280px] flex-col justify-center px-4 py-14 sm:min-h-[560px] sm:px-6 sm:py-16 lg:min-h-[640px] lg:px-8 lg:py-20">
+        <p className="mb-5 text-[10px] font-bold tracking-[0.28em] text-emerald-700 sm:text-xs">
           {slide.eyebrow}
         </p>
-        <h1 className="max-w-2xl text-5xl font-extrabold leading-[1.05] tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
+        <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl xl:text-7xl">
           {slide.line1}
           <br />
-          <span className="text-emerald-400">{slide.line2}</span>
+          <span className="text-emerald-600">{slide.line2}</span>
         </h1>
-        <h2 className="mt-6 text-2xl font-bold text-slate-900">{slide.sub}</h2>
-        <p className="mt-3 max-w-lg text-base text-slate-700">{slide.text}</p>
+        <h2 className="mt-6 text-xl font-bold text-slate-900 sm:text-2xl">
+          {slide.sub}
+        </h2>
+        <p className="mt-3 max-w-lg text-sm text-slate-700 sm:text-base">
+          {slide.text}
+        </p>
 
-        <div className="mt-9 flex flex-wrap items-center gap-4">
+        <div className="mt-9 flex flex-wrap items-center gap-3 sm:gap-4">
           <Link
             href="/explore"
-            className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-8 py-3.5 text-sm font-semibold text-[#04100e] shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-transform hover:scale-105"
+            className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-6 py-3.5 text-sm font-semibold text-[#04100e] shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-transform hover:scale-105 sm:px-8"
           >
             Explore Studios
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
-            href="/host"
-            className="inline-flex items-center rounded-full border border-slate-300 bg-white/60 px-8 py-3.5 text-sm font-semibold text-slate-800 backdrop-blur transition-colors hover:border-emerald-500 hover:text-emerald-700"
+            href="/about"
+            className="inline-flex items-center rounded-full border border-slate-300 bg-white/60 px-6 py-3.5 text-sm font-semibold text-slate-800 backdrop-blur transition-colors hover:border-emerald-500 hover:text-emerald-700 sm:px-8"
           >
             Host Your Space
           </Link>
         </div>
 
         {/* Slider controls */}
-        <div className="mt-14 flex items-center gap-5">
+        <div className="mt-10 flex flex-wrap items-center gap-4 sm:mt-14 sm:gap-5">
           <button
             onClick={prev}
             aria-label="Previous slide"

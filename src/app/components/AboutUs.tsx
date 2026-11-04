@@ -41,8 +41,8 @@ const values = [
 
 const AboutUs = () => {
   return (
-    <section id="about" className="bg-slate-50 py-16 sm:py-20">
-      <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
+    <section id="about" className="bg-slate-50 py-14 sm:py-16 lg:py-20">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
         {/* Centered heading */}
         <div className="mx-auto max-w-2xl text-center">
           <span className="mx-auto mb-4 block h-[3px] w-10 rounded-full bg-emerald-400" />
@@ -68,7 +68,7 @@ const AboutUs = () => {
             return (
               <div
                 key={item.id}
-                className={`group relative flex h-full flex-col items-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 text-center transition-all duration-300 hover:-translate-y-1.5 ${item.border} ${item.shadow}`}
+                className={`group relative flex h-full flex-col items-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 text-center transition-all duration-300 hover:-translate-y-1.5 sm:p-6 ${item.border} ${item.shadow}`}
               >
                 <span
                   className={`mb-4 grid h-12 w-12 place-items-center rounded-2xl transition-all duration-300 ${item.accent} ${item.hover}`}

@@ -18,7 +18,6 @@ export default function Home() {
         <AboutUs />
         <HowBookingWorks />
         <HostGuarantee />
-        {/* Add the rest of the sections here */}
       </main>
       <Footer />
     </div>

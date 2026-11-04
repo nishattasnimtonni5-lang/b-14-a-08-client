@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
@@ -22,20 +21,35 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-export const dynamic='force-dynamic'
+
+const localToday = () => {
+  const now = new Date()
+  const month = String(now.getMonth() + 1).padStart(2, "0")
+  const day = String(now.getDate()).padStart(2, "0")
+  return `${now.getFullYear()}-${month}-${day}`
+}
+
 const formSchema = z.object({
   date: z
     .string()
-    .min(1, "Please select a booking date."),
-  
+    .min(1, "Please select a booking date.")
+    .refine(
+      (value) => value >= localToday(),
+      "Booking date cannot be in the past."
+    ),
+
   time: z
     .string()
-    .min(1, "Please select a booking time."),
-
+    .min(1, "Please select a booking time.")
+    .refine(
+      (value) => /^\d{2}:\d{2}$/.test(value),
+      "Please enter a valid booking time."
+    ),
 })
 
-export function BookingForm({studioId}:{studioId:string}) {
-    const [showForm,setShowForm]=useState(false)
+export function BookingForm({ studioId }: { studioId: string }) {
+  const [showForm, setShowForm] = useState(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,53 +57,58 @@ export function BookingForm({studioId}:{studioId:string}) {
       time: "",
     },
   })
-console.log("Studio ID:", studioId);
+
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    try{
-        const res=await fetch("https://b-14-a-08-server-x2zf.vercel.app/api/bookings"
-        ,{
-            method:"POST",
-           
-           credentials:"include",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                studioId,
-                date:data.date,
-                time:data.time
-            })
-        })
-        const result = await res.json();
-
-console.log("Status:", res.status);
-console.log("Response:", result)
-        if(!res.ok){
-          throw new Error(result.message||"Booking failed")
+    try {
+      const res = await fetch(
+        "https://b-14-a-08-server-x2zf.vercel.app/api/bookings",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            studioId,
+            date: data.date,
+            time: data.time,
+          }),
         }
-    
-    toast.success("Booking submitted successfully!", {
-      description: `Date: ${data.date} | Time: ${data.time}`,
-    });
+      )
 
-    console.log(data);
-    form.reset();
-    setShowForm(false);
-  } catch (error){
-     const message =
-    error instanceof Error ? error.message : "Unknown error";
-toast.error( message)
-console.error("Booking error:",error)
+      const result = await res.json()
+
+      if (!res.ok) {
+        throw new Error(result.message || "Booking failed")
+      }
+
+      toast.success("Booking submitted successfully!", {
+        description: `Date: ${data.date} | Time: ${data.time}`,
+      })
+
+      form.reset()
+      setShowForm(false)
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Unknown error"
+      toast.error(message)
+    }
   }
-  }
-if(!showForm){
-    return(
-        <Button type="button" className="mt-5 w-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 py-3 text-sm font-semibold text-[#04100e]" 
-        onClick={()=>setShowForm(true)}>Book this studio</Button>
+
+  if (!showForm) {
+    return (
+      <Button
+        type="button"
+        className="mt-5 w-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 py-3 text-sm font-semibold text-[#04100e]"
+        onClick={() => setShowForm(true)}
+      >
+        Book this studio
+      </Button>
     )
-}
+  }
+
   return (
-    <Card className="w-full sm:max-w-md">
+    <Card className="mt-4 w-full sm:max-w-md">
       <CardHeader>
         <CardTitle>Studio Booking</CardTitle>
         <CardDescription>
@@ -97,7 +116,7 @@ if(!showForm){
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
+        <form id="booking-form" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <Controller
               name="date"
@@ -105,14 +124,14 @@ if(!showForm){
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="booking-date">
-                  Booking date
+                    Booking date
                   </FieldLabel>
                   <Input
                     {...field}
                     id="booking-date"
                     type="date"
+                    min={localToday()}
                     aria-invalid={fieldState.invalid}
-                   
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -129,13 +148,11 @@ if(!showForm){
                     Booking time
                   </FieldLabel>
                   <Input
-                      {...field}
-                      id="booking-time"
-                     type="time"
-                      aria-invalid={fieldState.invalid}
-                    />
-                   
-                      
+                    {...field}
+                    id="booking-time"
+                    type="time"
+                    aria-invalid={fieldState.invalid}
+                  />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
@@ -147,11 +164,22 @@ if(!showForm){
       </CardContent>
       <CardFooter>
         <Field orientation="horizontal">
-          <Button type="button" variant="outline" onClick={() => {form.reset();setShowForm(false)}}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => {
+              form.reset()
+              setShowForm(false)
+            }}
+          >
             Cancel
           </Button>
-          <Button type="submit" form="form-rhf-demo">
-            Submit
+          <Button
+            type="submit"
+            form="booking-form"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? "Submitting..." : "Submit"}
           </Button>
         </Field>
       </CardFooter>

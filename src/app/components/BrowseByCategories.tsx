@@ -25,16 +25,18 @@ const CategoryCard = ({ category }: { category: Category }) => {
   return (
     <Link
       href={`/explore?category=${encodeURIComponent(category.name)}`}
-      className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/50 hover:shadow-[0_0_28px_rgba(16,185,129,0.22)]"
+      className="group flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/50 hover:shadow-[0_0_28px_rgba(16,185,129,0.22)] sm:gap-4 sm:p-5"
     >
       <span
-        className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.35)] ${
+        className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.35)] sm:h-12 sm:w-12 ${
           accents[category.icon]
         }`}
       >
         <Icon size={20} />
       </span>
-      <span className="flex-1 text-sm font-semibold text-slate-900">{category.name}</span>
+      <span className="min-w-0 flex-1 break-words text-sm font-semibold leading-snug text-slate-900">
+        {category.name}
+      </span>
       <ArrowRight
         size={16}
         className="text-slate-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-emerald-600"
@@ -45,10 +47,10 @@ const CategoryCard = ({ category }: { category: Category }) => {
 
 const BrowseByCategories = () => {
   return (
-    <section className="bg-slate-50 pb-20">
-      <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
-        <div className="mb-8">
-          <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">
+    <section className="bg-slate-50 pb-14 sm:pb-16 lg:pb-20">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-xl font-extrabold tracking-tight text-slate-900 sm:text-2xl">
             Browse by Categories
           </h2>
           <p className="mt-1.5 text-sm text-slate-600">

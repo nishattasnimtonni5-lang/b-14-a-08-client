@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 const navLinks = ["Home", "Explore Studios", "How It Works", "About Us", "Contact"];
-const hrefs = ["/", "/explore", "/how-it-works", "/about", "/contact"];
+const hrefs = ["/", "/explore", "/how-it-works", "/about", "/about"];
 
 const socials: { label: string; icon: ReactNode }[] = [
   {
@@ -44,7 +44,7 @@ const socials: { label: string; icon: ReactNode }[] = [
 const Footer = () => {
   return (
     <footer className="border-t border-slate-200 bg-white">
-      <div className="mx-auto flex max-w-[1280px] flex-col items-center justify-between gap-6 px-6 py-8 lg:flex-row lg:px-8">
+      <div className="mx-auto flex max-w-[1280px] flex-col items-center justify-between gap-6 px-4 py-8 sm:px-6 lg:flex-row lg:px-8">
         {/* Brand */}
         <div className="flex items-center gap-2">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-emerald-400 to-teal-600 text-sm font-black text-[#04100e]">
@@ -88,7 +88,7 @@ const Footer = () => {
       </div>
 
       <div className="border-t border-slate-200 py-4">
-        <p className="mx-auto max-w-[1280px] px-6 text-center text-[11px] text-slate-500 lg:px-8">
+        <p className="mx-auto max-w-[1280px] px-4 text-center text-[11px] text-slate-500 sm:px-6 lg:px-8">
           © {new Date().getFullYear()} StudioSpace. All rights reserved.
         </p>
       </div>

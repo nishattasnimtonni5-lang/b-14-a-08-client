@@ -1,9 +1,7 @@
-
 import Link from "next/link";
 import { Star, MapPin, ArrowRight } from "lucide-react";
 import { Studio } from "@/data/studios";
 import { fetchStudios } from "../lib/studios";
-export const dynamic='force-dynamic'
 
 // Maps a category label to its badge color.
 const badgeColors: Record<string, string> = {
@@ -22,6 +20,10 @@ export const StudioCard = ({ studio }: { studio: Studio }) => (
       <img
         src={studio.image}
         alt={studio.name}
+        width={800}
+        height={500}
+        loading="lazy"
+        decoding="async"
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-transparent to-transparent" />
@@ -74,13 +76,13 @@ const FeaturedStudios = async() => {
   }
 
  return (
-    <section className="bg-slate-50 py-20">
-      <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
+    <section className="bg-slate-50 py-14 sm:py-16 lg:py-20">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4 sm:mb-10">
           <div>
             <span className="mb-3 block h-[3px] w-10 rounded-full bg-emerald-400" />
-            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">
+            <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
               Featured Studios
             </h2>
             <p className="mt-2 text-sm text-slate-600">
@@ -101,7 +103,7 @@ const FeaturedStudios = async() => {
             {errorMessage}
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {studios.map((studio) => (
               <StudioCard key={studio.id} studio={studio} />
             ))}
