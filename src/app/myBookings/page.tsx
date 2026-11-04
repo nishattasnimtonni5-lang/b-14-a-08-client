@@ -148,7 +148,7 @@ type Booking = {
           </p>
 
           <button
-            onClick={() => router.push("/explore")}
+            onClick={() => router.push("/explorePage")}
             className="rounded-lg bg-green-600 px-6 py-3 font-semibold text-white hover:bg-green-700"
           >
             Explore Studios

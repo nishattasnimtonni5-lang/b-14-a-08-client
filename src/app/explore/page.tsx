@@ -3,6 +3,8 @@ import Footer from "../components/Footer";
 import { StudioCard } from "../components/FeaturedStudios";
 import type { Studio } from "@/data/studios";
 import { fetchStudios } from "../lib/studios";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +26,7 @@ const explorePage = async () => {
       <main className="flex-1">
         <section className="bg-slate-50 py-12 sm:py-16 lg:py-20">
           <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+            
             <span className="mb-3 block h-[3px] w-10 rounded-full bg-emerald-400" />
 
             <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
