@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { API_BASE_URL } from "../lib/api";
 
 
 export default function AddStudioPage() {
@@ -36,7 +37,7 @@ export default function AddStudioPage() {
 
     try {
       const tokenResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/token`,
+        `${API_BASE_URL}/api/token`,
         {
           credentials: "include",
         }
@@ -48,7 +49,7 @@ export default function AddStudioPage() {
       }
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/studios`,
+        `${API_BASE_URL}/api/studios`,
         {
           method: "POST",
           headers: {

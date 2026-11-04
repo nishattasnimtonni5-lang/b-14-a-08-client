@@ -6,6 +6,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { BookingForm } from "../bookingform";
 import SessionGuard from "@/app/components/SessionGuard";
+import { API_BASE_URL } from "@/app/lib/api";
 
 export const dynamic = "force-dynamic";
 
@@ -53,7 +54,7 @@ const detailsPage = async ({ params }: Props) => {
 
   try {
     const res = await fetch(
-      `https://b-14-a-08-server-x2zf.vercel.app/api/studios/${id}`
+      `${API_BASE_URL}/api/studios/${id}`
     );
     const payload: unknown = await res.json();
     fetchFailed = !res.ok;

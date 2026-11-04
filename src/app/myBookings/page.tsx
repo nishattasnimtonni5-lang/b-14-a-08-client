@@ -5,9 +5,8 @@ import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import SessionGuard from "../components/SessionGuard";
+import { API_BASE_URL } from "../lib/api";
 
-
-const API_BASE = "https://b-14-a-08-server-x2zf.vercel.app";
 
 type Booking = {
   _id: string;
@@ -30,7 +29,7 @@ type Booking = {
 
   const fetchBookings = useCallback(async () => {
     try {
-      const tokenResponse = await fetch(`${API_BASE}/api/token`, {
+      const tokenResponse = await fetch(`${API_BASE_URL}/api/token`, {
         credentials: "include",
       });
 
@@ -40,7 +39,7 @@ type Booking = {
 
       const tokenData = await tokenResponse.json();
 
-      const response = await fetch(`${API_BASE}/api/my-bookings`, {
+      const response = await fetch(`${API_BASE_URL}/api/my-bookings`, {
         headers: {
           Authorization: `Bearer ${tokenData.token}`,
         },

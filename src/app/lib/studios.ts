@@ -1,6 +1,7 @@
 import type { Studio } from "@/data/studios";
+import { API_BASE_URL } from "./api";
 
-const STUDIOS_API_URL = "https://b-14-a-08-server-x2zf.vercel.app/api/studios";
+const STUDIOS_API_URL = `${API_BASE_URL}/api/studios`;
 
 export async function fetchStudios(): Promise<Studio[]> {
   const response = await fetch(STUDIOS_API_URL, { next: { revalidate: 300 } });

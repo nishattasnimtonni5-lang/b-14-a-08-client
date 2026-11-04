@@ -21,6 +21,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { API_BASE_URL } from "../lib/api"
 
 const localToday = () => {
   const now = new Date()
@@ -61,7 +62,7 @@ export function BookingForm({ studioId }: { studioId: string }) {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
       const res = await fetch(
-        "https://b-14-a-08-server-x2zf.vercel.app/api/bookings",
+        `${API_BASE_URL}/api/bookings`,
         {
           method: "POST",
           credentials: "include",
