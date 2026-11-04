@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import SessionGuard from "../components/SessionGuard";
 
 
 const API_BASE = "https://b-14-a-08-server-x2zf.vercel.app";
@@ -69,7 +70,10 @@ type Booking = {
 
   if (loading) {
     return (
+   
       <div className="mx-auto max-w-[1280px] space-y-6 px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+         <SessionGuard/>
+         <Navbar/>
         <div className="h-9 w-56 animate-pulse rounded-lg bg-gray-200" />
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -148,7 +152,7 @@ type Booking = {
           </p>
 
           <button
-            onClick={() => router.push("/explorePage")}
+            onClick={() => router.push("/explore")}
             className="rounded-lg bg-green-600 px-6 py-3 font-semibold text-white hover:bg-green-700"
           >
             Explore Studios
