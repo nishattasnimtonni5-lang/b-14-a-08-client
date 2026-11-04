@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import SessionGuard from "../components/SessionGuard";
@@ -24,8 +24,6 @@ type Booking = {
 };
 
  function BookingsContent() {
-  const router = useRouter();
-
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -151,12 +149,12 @@ type Booking = {
             You have not booked any studio yet.
           </p>
 
-          <button
-            onClick={() => router.push("/explore")}
+          <Link
+            href="/explore"
             className="rounded-lg bg-green-600 px-6 py-3 font-semibold text-white hover:bg-green-700"
           >
             Explore Studios
-          </button>
+          </Link>
         </div>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

@@ -4,6 +4,10 @@ import { auth } from './app/lib/auth'
 
 
 export async function proxy(request: NextRequest) {
+  if (request.nextUrl.pathname === '/studios') {
+    return NextResponse.redirect(new URL('/explore', request.url))
+  }
+
   const session = await auth.api.getSession({ headers: 
    request.headers
   })
