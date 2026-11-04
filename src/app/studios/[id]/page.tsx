@@ -5,6 +5,7 @@ import { Studio } from "@/data/studios";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { BookingForm } from "../bookingform";
+import SessionGuard from "@/app/components/SessionGuard";
 
 export const dynamic = "force-dynamic";
 
@@ -64,6 +65,7 @@ const detailsPage = async ({ params }: Props) => {
   if (!studio) {
     return (
       <div className="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-900">
+       <SessionGuard />
         <Navbar />
         {fetchFailed ? (
           <StatusMessage
