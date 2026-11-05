@@ -2,10 +2,14 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import type { ReactNode } from "react";
 import { authClient } from "../lib/auth-client";
 
+type SessionGuardProps = {
+  children?: ReactNode;
+};
 
-export default function SessionGuard() {
+export default function SessionGuard({ children }: SessionGuardProps) {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
 
@@ -23,5 +27,5 @@ export default function SessionGuard() {
     );
   }
 
-  return null;
+  return children ?? null;
 }
