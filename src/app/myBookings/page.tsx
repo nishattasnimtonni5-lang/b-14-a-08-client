@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { API_BASE_URL } from "../lib/api";
+import { API_BASE_URL, getAccessToken } from "../lib/api";
 
 
 type Booking = {
@@ -28,16 +28,8 @@ type Booking = {
 const [token, setToken] = useState("");
   const fetchBookings = useCallback(async () => {
     try {
-      const tokenResponse = await fetch(`${API_BASE_URL}/api/token`, {
-        credentials: "include",
-      });
-
-      if (!tokenResponse.ok) {
-        throw new Error("Unable to generate access token");
-      }
-
-      const tokenData = await tokenResponse.json();
-setToken(tokenData.token);
+      const tokenData = { token: await getAccessToken() };
+      setToken(tokenData.token);
       const response = await fetch(`${API_BASE_URL}/api/my-bookings`, {
         headers: {
           Authorization: `Bearer ${tokenData.token}`,

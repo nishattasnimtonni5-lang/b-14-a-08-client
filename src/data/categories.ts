@@ -13,4 +13,5 @@ export const categories: Category[] = [
   { id: "3", name: "Music Studio", icon: "music" },
   { id: "4", name: "Video Production", icon: "video" },
   { id: "5", name: "Creative Space", icon: "palette" },
+  { id: "6", name: "Painting Studio", icon: "palette" },
 ];

@@ -1,15 +1,9 @@
 import { createAuthClient } from "better-auth/react";
 import { jwtClient } from "better-auth/client/plugins";
-
-const authBaseURL =
-  typeof window !== "undefined"
-    ? window.location.origin
-    : process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000";
+import { API_BASE_URL } from "./api";
 
 export const authClient = createAuthClient({
-  baseURL: authBaseURL,
+  baseURL: API_BASE_URL,
   plugins: [
     jwtClient(),
   ],

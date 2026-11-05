@@ -89,12 +89,6 @@ const Banner = () => {
             Explore Studios
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
           </Link>
-          <Link
-            href="/about"
-            className="inline-flex items-center rounded-full border border-slate-300 bg-white/60 px-6 py-3.5 text-sm font-semibold text-slate-800 backdrop-blur transition-colors hover:border-emerald-500 hover:text-emerald-700 sm:px-8"
-          >
-            Host Your Space
-          </Link>
         </div>
 
         {/* Slider controls */}

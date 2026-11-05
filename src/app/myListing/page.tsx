@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { API_BASE_URL } from "@/app/lib/api";
+import { API_BASE_URL, getAccessToken } from "@/app/lib/api";
+import { toast } from "sonner";
+import PageSkeleton from "@/components/page-skeleton";
 
 type Studio = {
   id: string;
@@ -56,18 +58,7 @@ export default function MyListingsPage() {
 
   const fetchStudios = async () => {
     try {
-      const tokenResponse = await fetch(`${API_BASE_URL}/api/token`, {
-        credentials: "include",
-      });
-
-      const tokenData = await readApiJson<{ token: string; message?: string }>(
-        tokenResponse
-      );
-
-      if (!tokenResponse.ok) {
-        throw new Error(tokenData.message || "Authentication failed");
-      }
-
+      const tokenData = { token: await getAccessToken() };
       setToken(tokenData.token);
 
       const response = await fetch(`${API_BASE_URL}/api/my-studios`, {
@@ -134,11 +125,11 @@ export default function MyListingsPage() {
         throw new Error(getApiErrorMessage(data) || "Update failed");
       }
 
-      alert("Studio updated successfully!");
+      toast.success("Studio updated successfully!");
       setEditingId(null);
       await fetchStudios();
     } catch (error) {
-      alert(error instanceof Error ? error.message : "Update failed");
+      toast.error(error instanceof Error ? error.message : "Update failed");
     }
   };
 
@@ -164,14 +155,14 @@ export default function MyListingsPage() {
       }
 
       setStudios(studios.filter((studio) => studio.id !== id));
-      alert("Studio deleted successfully!");
+      toast.success("Studio deleted successfully!");
     } catch (error) {
-      alert(error instanceof Error ? error.message : "Delete failed");
+      toast.error(error instanceof Error ? error.message : "Delete failed");
     }
   };
 
   if (loading) {
-    return <p className="p-10 text-center">Loading studios...</p>;
+    return <PageSkeleton />;
   }
 
   return (

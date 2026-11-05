@@ -5,8 +5,9 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { API_BASE_URL } from "../lib/api";
+import { API_BASE_URL, getAccessToken } from "../lib/api";
 import { authClient } from "../lib/auth-client";
+import { toast } from "sonner";
 
 const amenitiesList = [
   "Wi-Fi",
@@ -70,15 +71,7 @@ export default function AddStudioPage() {
     }
 
     try {
-      const tokenResponse = await fetch(`${API_BASE_URL}/api/token`, {
-        credentials: "include",
-      });
-
-      const tokenData = await tokenResponse.json();
-
-      if (!tokenResponse.ok) {
-        throw new Error(tokenData.message || "Failed to get token");
-      }
+      const tokenData = { token: await getAccessToken() };
 
       const response = await fetch(`${API_BASE_URL}/api/studios`, {
         method: "POST",
@@ -102,13 +95,14 @@ export default function AddStudioPage() {
         throw new Error(data.message || "Failed to add studio");
       }
 
-      alert("Studio added successfully!");
+      toast.success("Studio added successfully!");
       router.push("/explore");
       router.refresh();
     } catch (error) {
-      setError(
-        error instanceof Error ? error.message : "Something went wrong"
-      );
+      const message =
+        error instanceof Error ? error.message : "Something went wrong";
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }

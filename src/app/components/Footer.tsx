@@ -148,7 +148,7 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="shrink-0 rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-6 py-2.5 text-sm font-semibold text-[#04100e] transition-transform hover:scale-105"
+                className="w-full shrink-0 rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-6 py-2.5 text-sm font-semibold text-[#04100e] transition-transform hover:scale-105 sm:w-auto"
               >
                 Subscribe
               </button>

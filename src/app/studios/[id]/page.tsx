@@ -15,6 +15,7 @@ import Footer from "../../components/Footer";
 import { BookingForm } from "../bookingform";
 import { API_BASE_URL } from "@/app/lib/api";
 import StudioGallery from "./StudioGallery";
+import ReviewForm from "./ReviewForm";
 
 export const dynamic = "force-dynamic";
 
@@ -304,6 +305,7 @@ const detailsPage = async ({ params }: Props) => {
                     ? "Individual customer reviews are not available yet."
                     : "No reviews have been submitted for this workspace yet."}
                 </p>
+                <ReviewForm studioId={id} />
               </section>
             </div>
 

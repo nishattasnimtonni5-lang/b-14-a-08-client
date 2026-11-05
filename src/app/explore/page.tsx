@@ -1,14 +1,17 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { StudioCard } from "../components/FeaturedStudios";
 import type { Studio } from "@/data/studios";
 import { fetchStudios } from "../lib/studios";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import ExploreStudios from "./ExploreStudios";
 
 export const dynamic = "force-dynamic";
 
-const explorePage = async () => {
+const explorePage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) => {
+  const { category } = await searchParams;
   let studios: Studio[] = [];
   let errorMessage = "";
 
@@ -47,11 +50,7 @@ const explorePage = async () => {
                 No studios are available right now. Please check back later.
               </div>
             ) : (
-              <div className="mt-8 grid grid-cols-1 gap-5 sm:mt-10 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-                {studios.map((studio: Studio) => (
-                  <StudioCard key={studio.id} studio={studio} />
-                ))}
-              </div>
+              <ExploreStudios studios={studios} initialCategory={category} />
             )}
           </div>
         </section>
