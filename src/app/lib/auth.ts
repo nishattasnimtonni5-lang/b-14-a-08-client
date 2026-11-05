@@ -20,7 +20,7 @@ export const auth = betterAuth({
   trustedOrigins: [
     "http://localhost:3000",
     "https://b-14-a-08-client.vercel.app",
-    "https://b-14-a-08-client-n5a49h3ma-a-06.vercel.app",
+  
   ],
   database: mongodbAdapter(db),
   emailAndPassword: {
