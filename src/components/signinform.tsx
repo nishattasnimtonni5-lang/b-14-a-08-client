@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 
-import { authClient } from "@/app/lib/auth-client"
+import { authClient, signInWithGoogle } from "@/app/lib/auth-client"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
@@ -68,6 +68,30 @@ export default function SignInForm({
 
     setLoading(false);
   };
+
+  const handleGoogleSignIn = async () => {
+    if (loading) return;
+    setLoading(true);
+
+    const next = new URLSearchParams(window.location.search).get("next");
+    const callbackURL =
+      next && next.startsWith("/") && !next.startsWith("//") ? next : "/";
+
+    try {
+      const { error } = await signInWithGoogle(callbackURL);
+
+      if (error) {
+        toast.error(error.message || "Google sign-in failed");
+        setLoading(false);
+      }
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Google sign-in failed"
+      );
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -110,8 +134,13 @@ export default function SignInForm({
                 >
                   {loading ? "Logging in..." : "Login"}
                 </Button>
-                <Button className="hover:bg-black hover:text-white"
-                 variant="outline" type="button">
+                <Button
+                  className="hover:bg-black hover:text-white"
+                  variant="outline"
+                  type="button"
+                  disabled={loading}
+                  onClick={handleGoogleSignIn}
+                >
                   Login with Google
                 </Button>
                 <FieldDescription className="text-center">

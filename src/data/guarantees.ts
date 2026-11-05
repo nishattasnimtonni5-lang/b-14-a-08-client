@@ -11,26 +11,30 @@ export type Guarantee = {
 export const guarantees: Guarantee[] = [
   {
     id: "1",
-    title: "Host Protection",
-    description: "Verified bookings and property coverage for every studio host.",
+    title: "Host Protection & Liability Protection",
+    description:
+      "Robust host liability coverage plus property protection for your studio, so every booking is backed from check-in to check-out.",
     icon: "shield",
   },
   {
     id: "2",
-    title: "Secure Bookings",
-    description: "Encrypted payments and protected reservations, every time.",
+    title: "Verified Profiles",
+    description:
+      "Every user and host profile is verified before they can book or list, keeping your studio and your guests safe.",
     icon: "lock",
   },
   {
     id: "3",
-    title: "Creator Support",
-    description: "A dedicated team helping creators from search to wrap-up.",
-    icon: "headphones",
+    title: "Equipment Safety",
+    description:
+      "Clear equipment safety guidelines and assurances under our Creator Support, so gear is used, handled and returned safely.",
+    icon: "zap",
   },
   {
     id: "4",
-    title: "Reliable Experience",
-    description: "Trusted reviews and real-time confirmation you can count on.",
-    icon: "zap",
+    title: "24/7 Host Support",
+    description:
+      "A dedicated host support team available around the clock — questions, issues or emergencies answered anytime, day or night.",
+    icon: "headphones",
   },
 ];

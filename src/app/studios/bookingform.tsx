@@ -61,21 +61,18 @@ export function BookingForm({ studioId }: { studioId: string }) {
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
-      const res = await fetch(
-        `${API_BASE_URL}/api/bookings`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            studioId,
-            date: data.date,
-            time: data.time,
-          }),
-        }
-      )
+      const res = await fetch(`${API_BASE_URL}/api/bookings`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          studioId,
+          date: data.date,
+          time: data.time,
+        }),
+      })
 
       const result = await res.json()
 
@@ -96,94 +93,113 @@ export function BookingForm({ studioId }: { studioId: string }) {
     }
   }
 
-  if (!showForm) {
-    return (
+  return (
+    <>
       <Button
         type="button"
-        className="mt-5 w-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 py-3 text-sm font-semibold text-[#04100e]"
         onClick={() => setShowForm(true)}
+        className="mt-5 w-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 py-3 text-sm font-semibold text-[#04100e]"
       >
-        Book this studio
+        Book Workspace Now
       </Button>
-    )
-  }
 
-  return (
-    <Card className="mt-4 w-full sm:max-w-md">
-      <CardHeader>
-        <CardTitle>Studio Booking</CardTitle>
-        <CardDescription>
-          Select your preferred booking date and time.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form id="booking-form" onSubmit={form.handleSubmit(onSubmit)}>
-          <FieldGroup>
-            <Controller
-              name="date"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="booking-date">
-                    Booking date
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="booking-date"
-                    type="date"
-                    min={localToday()}
-                    aria-invalid={fieldState.invalid}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
+      {showForm && (
+        <div
+  className="fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto bg-slate-900/40 px-4 py-6 backdrop-blur-[2px]"
+  onClick={() => setShowForm(false)}
+>
+          <div
+  className="relative z-[10000] w-full max-w-md"
+  onClick={(e) => e.stopPropagation()}
+>
+  <Card className="w-full border-0 bg-white shadow-2xl">
+              <CardHeader>
+                <CardTitle>Studio Booking</CardTitle>
+                <CardDescription>
+                  Select your preferred booking date and time.
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent>
+                <form
+                  id="booking-form"
+                  onSubmit={form.handleSubmit(onSubmit)}
+                >
+                  <FieldGroup>
+                    <Controller
+                      name="date"
+                      control={form.control}
+                      render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                          <FieldLabel htmlFor="booking-date">
+                            Booking date
+                          </FieldLabel>
+                          <Input
+                            {...field}
+                            id="booking-date"
+                            type="date"
+                            min={localToday()}
+                            aria-invalid={fieldState.invalid}
+                          />
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      )}
+                    />
+
+                    <Controller
+                      name="time"
+                      control={form.control}
+                      render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                          <FieldLabel htmlFor="booking-time">
+                            Booking time
+                          </FieldLabel>
+                          <Input
+                            {...field}
+                            id="booking-time"
+                            type="time"
+                            aria-invalid={fieldState.invalid}
+                          />
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      )}
+                    />
+                  </FieldGroup>
+                </form>
+              </CardContent>
+
+              <CardFooter>
+                <Field orientation="horizontal">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      form.reset()
+                      setShowForm(false)
+                    }}
+                  >
+                    Cancel
+                  </Button>
+
+                  <Button
+                    type="submit"
+                    form="booking-form"
+                    disabled={form.formState.isSubmitting}
+                  >
+                    {form.formState.isSubmitting
+                      ? "Submitting..."
+                      : "Submit"}
+                  </Button>
                 </Field>
-              )}
-            />
-            <Controller
-              name="time"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="booking-time">
-                    Booking time
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="booking-time"
-                    type="time"
-                    aria-invalid={fieldState.invalid}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-          </FieldGroup>
-        </form>
-      </CardContent>
-      <CardFooter>
-        <Field orientation="horizontal">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => {
-              form.reset()
-              setShowForm(false)
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            form="booking-form"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? "Submitting..." : "Submit"}
-          </Button>
-        </Field>
-      </CardFooter>
-    </Card>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+      )}
+    </>
   )
 }

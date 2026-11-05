@@ -1,13 +1,17 @@
-// Shape of a studio document returned by the studios API.
-
 export type Studio = {
   id: string;
   name: string;
   category: string;
-  price: number; // per hour, USD
+  price: number;
   rating: number;
   reviews: number;
   location: string;
   image: string;
+  securityDeposit?: number;
+  maxCapacity?: number;
+  amenities?: string[];
+  overview?: string;
+  userName?: string;
+  userEmail?: string;
+  gallery?: string[];
 };
-
