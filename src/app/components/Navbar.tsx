@@ -1,12 +1,22 @@
 "use client";
+
 import Link from "next/link";
-import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "../provider";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
 import { authClient } from "../lib/auth-client";
-import { Popover, PopoverContent ,PopoverTrigger} from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
+
 const links = [
   { label: "Home", href: "/" },
   { label: "Explore Studios", href: "/explore" },
@@ -18,177 +28,136 @@ const links = [
 ];
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
-const {data:session}=authClient.useSession();
-const user=session?.user;
-const avatarImage = user?.image?.trim();
-const avatarInitial =
-  user?.name?.trim().charAt(0).toUpperCase() ||
-  user?.email?.trim().charAt(0).toUpperCase() ||
-  "U";
-const handleSignOut = async () => {
-  setOpen(false);
-  await authClient.signOut();
-};
+
+  const { resolvedTheme, setTheme } = useTheme();
+
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  };
+
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+
+  const avatarImage = user?.image?.trim();
+
+  const avatarInitial =
+    user?.name?.trim().charAt(0).toUpperCase() ||
+    user?.email?.trim().charAt(0).toUpperCase() ||
+    "U";
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+  };
+
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/90">
       <div className="mx-auto flex h-[68px] max-w-[1280px] items-center justify-between gap-2 px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-emerald-400 to-teal-600 text-lg font-black text-[#04100e]">
+        <Link href="/" className="flex shrink-0 items-center gap-1 sm:gap-2">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-emerald-400 to-teal-600 text-lg font-black text-[#04100e] sm:h-9 sm:w-9">
             S
           </span>
-          <span className="text-lg font-bold tracking-tight lg:text-xl">
+
+          <span className="text-base font-bold tracking-tight sm:text-lg lg:text-xl">
             <span className="text-emerald-400">Studio</span>
-            <span className="text-slate-900">Space</span>
+            <span className="text-slate-900 dark:text-white">Space</span>
           </span>
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-2 md:flex lg:gap-8">
+        <nav className="flex min-w-0 items-center gap-3 md:gap-4 xl:gap-6">
           {links.map((l) => {
             const active = pathname === l.href;
+
             return (
-            <Link
-              key={l.label}
-              href={l.href}
-              className={`relative py-2 text-sm font-medium transition-colors ${
-                active
-                  ? "text-emerald-600"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              {l.label}
-              {active && (
-                <span className="absolute -bottom-[2px] left-0 h-[2px] w-full rounded-full bg-emerald-400" />
-              )}
-            </Link>
-            );
-          })}
-         
-        </nav>
-
-        {/* Actions */}
-        
-          {user ?(
-            <Popover>
-              <PopoverTrigger>
-        <Avatar >
-              <AvatarFallback>{avatarInitial}</AvatarFallback>
-              {avatarImage && (
-                <AvatarImage
-                  className="data-[loading]:invisible data-[error]:invisible"
-                  keepMounted
-                  referrerPolicy="no-referrer"
-                  src={avatarImage}
-                />
-              )}
-            </Avatar>
-</PopoverTrigger>
-<PopoverContent className="w-64">
-  <div className="space-y-2">
-<p className="font-semibold">{user.name}</p>
-<p className="text-sm text-muted-foreground">{user.email}</p>
-<Button variant="destructive"
-className="w-full"
-onClick={handleSignOut}>
-  Sign out
-  </Button>
-  </div>
-  </PopoverContent>
-  </Popover>
-):(
-
-        <div className="hidden items-center gap-4 md:flex">
-          <Link
-            href="/signin"
-            className="whitespace-nowrap text-sm font-medium text-slate-700 transition-colors hover:text-emerald-600"
-          >
-            Sign in
-          </Link>
-          <Link
-            href="/signup"
-            className="whitespace-nowrap rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-6 py-2.5 text-sm font-semibold text-[#04100e] shadow-[0_0_25px_rgba(16,185,129,0.35)] transition-transform hover:scale-105 md:block"
-          >
-            Sign Up
-          </Link>
-          </div>
-       
-)}
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="grid h-10 w-10 place-items-center rounded-lg text-slate-700 md:hidden"
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      {open && (
-        <div className="max-h-[calc(100dvh-68px)] overflow-y-auto border-t border-slate-200 bg-white px-4 py-4 sm:px-6 md:hidden">
-          <nav className="flex flex-col gap-1">
-            {links.map((l) => {
-              const active = pathname === l.href;
-              return (
               <Link
                 key={l.label}
                 href={l.href}
-                onClick={() => setOpen(false)}
-                className={`rounded-lg px-3 py-2.5 text-sm font-medium ${
+                className={`relative whitespace-nowrap py-2 text-[13px] font-medium transition-colors xl:text-sm ${
                   active
-                    ? "bg-emerald-500/10 text-emerald-600"
-                    : "text-slate-600 hover:bg-slate-100"
+                    ? "text-emerald-600"
+                    : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
                 }`}
               >
                 {l.label}
-              </Link>
-              );
-            })}
-          </nav>
-          {user ? (
-            <div className="mt-4 flex items-center gap-3 border-t border-slate-200 pt-4">
-              <Avatar>
-                <AvatarFallback>{avatarInitial}</AvatarFallback>
-                {avatarImage && (
-                  <AvatarImage
-                    className="data-[loading]:invisible data-[error]:invisible"
-                    keepMounted
-                    referrerPolicy="no-referrer"
-                    src={avatarImage}
-                  />
+
+                {active && (
+                  <span className="absolute -bottom-[2px] left-0 h-[2px] w-full rounded-full bg-emerald-400" />
                 )}
-              </Avatar>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-semibold text-slate-900">
-                  {user.name}
-                </p>
-                <p className="truncate text-xs text-slate-500">{user.email}</p>
-              </div>
-              
-            </div>
-          ) : (
-            <div className="mt-4 flex items-center gap-3">
-              <Link
-                href="/signin"
-                onClick={() => setOpen(false)}
-                className="flex-1 rounded-full border border-slate-300 py-2.5 text-center text-sm font-medium text-slate-700"
-              >
-                Sign in
               </Link>
-              <Link
-                href="/signup"
-                onClick={() => setOpen(false)}
-                className="flex-1 rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 py-2.5 text-center text-sm font-semibold text-[#04100e]"
-              >
-                Sign Up
-              </Link>
-            </div>
-          )}
-        </div>
-      )}
+            );
+          })}
+        </nav>
+
+        {user ? (
+          <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+            <Popover>
+              <PopoverTrigger>
+                <Avatar>
+                  <AvatarFallback>{avatarInitial}</AvatarFallback>
+
+                  {avatarImage && (
+                    <AvatarImage
+                      className="data-[loading]:invisible data-[error]:invisible"
+                      keepMounted
+                      referrerPolicy="no-referrer"
+                      src={avatarImage}
+                    />
+                  )}
+                </Avatar>
+              </PopoverTrigger>
+
+              <PopoverContent className="w-64">
+                <div className="space-y-2">
+                  <p className="font-semibold">{user.name}</p>
+                  <p className="text-sm text-muted-foreground">{user.email}</p>
+                </div>
+              </PopoverContent>
+            </Popover>
+
+            <Button
+              variant="destructive"
+              className="h-9 px-2 text-xs sm:px-4 sm:text-sm"
+              onClick={handleSignOut}
+            >
+              Sign out
+            </Button>
+          </div>
+        ) : (
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-200 text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+            >
+              {resolvedTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
+            <Link
+              href="/signin"
+              className="whitespace-nowrap text-xs font-medium text-slate-700 transition-colors hover:text-emerald-600 dark:text-slate-200 sm:text-sm"
+            >
+              Sign in
+            </Link>
+
+            <Link
+              href="/signup"
+              className="whitespace-nowrap rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-2.5 py-2 text-xs font-semibold text-[#04100e] shadow-[0_0_25px_rgba(16,185,129,0.35)] transition-transform hover:scale-105 sm:px-5 sm:py-2.5 sm:text-sm"
+            >
+              Sign Up
+            </Link>
+          </div>
+        )}
+
+        {user && (
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-200 text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+          >
+            {resolvedTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+        )}
+      </div>
     </header>
   );
 };

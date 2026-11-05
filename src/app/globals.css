@@ -1,4 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@custom-variant dark (&:where(.dark, .dark *));
 
+.dark .bg-slate-50 {
+  background-color: var(--color-slate-950);
+}

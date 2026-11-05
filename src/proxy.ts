@@ -21,5 +21,5 @@ const user=session?.user;
 }
 
 export const config = {
-  matcher: ['/myBookings/:path*', '/studios/:path*'],
+  matcher: ['/studios/:path*'],
 }
