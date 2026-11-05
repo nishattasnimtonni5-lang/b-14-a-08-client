@@ -1,7 +1,7 @@
 
 "use client";
 
-import { authClient } from "@/app/lib/auth-client";
+import { authClient, signInWithGoogle } from "@/app/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,6 +32,8 @@ export default function SignUpForm({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (loading) return;
 
     const formData = new FormData(e.currentTarget);
 
@@ -78,6 +80,25 @@ export default function SignUpForm({
     } catch {
       toast.error("Something went wrong");
     } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      const { error } = await signInWithGoogle("/");
+
+      if (error) {
+        toast.error(error.message || "Google sign-up failed");
+        setLoading(false);
+      }
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Google sign-up failed"
+      );
       setLoading(false);
     }
   };
@@ -169,8 +190,10 @@ export default function SignUpForm({
                   variant="outline"
                   className="hover:bg-black hover:text-white"
                   type="button"
+                  disabled={loading}
+                  onClick={handleGoogleSignUp}
                 >
-                  Sign Up with Google
+                  {loading ? "Redirecting..." : "Sign Up with Google"}
                 </Button>
 
                 <FieldDescription className="text-center">

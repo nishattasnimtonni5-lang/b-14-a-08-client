@@ -14,8 +14,23 @@ await client.connect();
 
 const db = client.db("studio-space");
 
+const productionAuthHost =
+  process.env.VERCEL_PROJECT_PRODUCTION_URL || "b-14-a-08-client.vercel.app";
+const authBaseURL = {
+  allowedHosts: [
+    "localhost:3000",
+    "b-14-a-08-client.vercel.app",
+    ...(process.env.VERCEL_URL ? [process.env.VERCEL_URL] : []),
+    ...(process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? [process.env.VERCEL_PROJECT_PRODUCTION_URL]
+      : []),
+  ],
+  fallback: `https://${productionAuthHost}`,
+  protocol: "auto" as const,
+};
+
 export const auth = betterAuth({
-  baseURL: process.env.BETTER_AUTH_URL,
+  baseURL: authBaseURL,
   secret: process.env.BETTER_AUTH_SECRET,
   trustedOrigins: [
     "http://localhost:3000",
@@ -28,8 +43,8 @@ export const auth = betterAuth({
   },
    socialProviders: {
         google: { 
-            clientId: process.env.GOOGLE_CLIENT_ID as string, 
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string, 
+            clientId: process.env.BETTER_AUTH_GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.BETTER_AUTH_GOOGLE_SECRET as string,
         }, 
     },
   plugins:[
