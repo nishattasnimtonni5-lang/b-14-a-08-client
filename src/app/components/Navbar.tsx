@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sun, Moon } from "lucide-react";
+import {
+  Sun,
+  Moon,
+  LayoutDashboard,
+  PlusCircle,
+  Building2,
+  CalendarDays,
+  LogOut,
+} from "lucide-react";
 import { useTheme } from "../provider";
 import {
   Avatar,
@@ -25,6 +33,29 @@ const links = [
   { label: "My listing", href: "/myListing" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "About Us", href: "/about" },
+];
+
+const accountLinks = [
+  {
+    label: "Dashboard",
+    href: "/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    label: "Add New Studio",
+    href: "/addStudio",
+    icon: PlusCircle,
+  },
+  {
+    label: "My Studio Listings",
+    href: "/myListing",
+    icon: Building2,
+  },
+  {
+    label: "My Bookings",
+    href: "/myBookings",
+    icon: CalendarDays,
+  },
 ];
 
 const Navbar = () => {
@@ -91,7 +122,7 @@ const Navbar = () => {
         {user ? (
           <div className="flex shrink-0 items-center gap-1 sm:gap-2">
             <Popover>
-              <PopoverTrigger>
+              <PopoverTrigger className="rounded-full outline-none ring-offset-2 transition hover:ring-2 hover:ring-emerald-400">
                 <Avatar>
                   <AvatarFallback>{avatarInitial}</AvatarFallback>
 
@@ -106,21 +137,52 @@ const Navbar = () => {
                 </Avatar>
               </PopoverTrigger>
 
-              <PopoverContent className="w-64">
-                <div className="space-y-2">
-                  <p className="font-semibold">{user.name}</p>
-                  <p className="text-sm text-muted-foreground">{user.email}</p>
+              <PopoverContent
+                align="end"
+                className="w-64 p-2"
+              >
+                <div className="border-b border-slate-200 px-3 py-3 dark:border-slate-700">
+                  <p className="font-semibold text-slate-900 dark:text-white">
+                    {user.name}
+                  </p>
+                  <p className="break-all text-sm text-muted-foreground">
+                    {user.email}
+                  </p>
+                </div>
+
+                <div className="space-y-1 py-2">
+                  {accountLinks.map((item) => {
+                    const Icon = item.icon;
+                    const active = pathname === item.href;
+
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
+                          active
+                            ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
+                            : "text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                        }`}
+                      >
+                        <Icon size={17} />
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+
+                <div className="border-t border-slate-200 pt-2 dark:border-slate-700">
+                  <button
+                    onClick={handleSignOut}
+                    className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50 dark:hover:bg-red-950"
+                  >
+                    <LogOut size={17} />
+                    Sign Out
+                  </button>
                 </div>
               </PopoverContent>
             </Popover>
-
-            <Button
-              variant="destructive"
-              className="h-9 px-2 text-xs sm:px-4 sm:text-sm"
-              onClick={handleSignOut}
-            >
-              Sign out
-            </Button>
           </div>
         ) : (
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
