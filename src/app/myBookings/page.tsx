@@ -26,7 +26,7 @@ type Booking = {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+const [token, setToken] = useState("");
   const fetchBookings = useCallback(async () => {
     try {
       const tokenResponse = await fetch(`${API_BASE_URL}/api/token`, {
@@ -38,7 +38,7 @@ type Booking = {
       }
 
       const tokenData = await tokenResponse.json();
-
+setToken(tokenData.token);
       const response = await fetch(`${API_BASE_URL}/api/my-bookings`, {
         headers: {
           Authorization: `Bearer ${tokenData.token}`,
@@ -65,6 +65,39 @@ type Booking = {
     void Promise.resolve().then(fetchBookings);
   }, [fetchBookings]);
 
+  const handleCancel = async (bookingId: string) => {
+  if (!window.confirm("Are you sure you want to cancel this booking?")) {
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/api/bookings/${bookingId}/cancel`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Cancellation failed");
+    }
+
+    setBookings((prev) =>
+      prev.map((booking) =>
+        booking._id === bookingId
+          ? { ...booking, status: "Cancelled" }
+          : booking
+      )
+    );
+  } catch (error) {
+    alert(error instanceof Error ? error.message : "Something went wrong");
+  }
+};
   if (loading) {
     return (
    
@@ -227,6 +260,15 @@ type Booking = {
                     {booking.status}
                   </span>
                 </div>
+     {["Pending", "Confirmed"].includes(booking.status) && (
+  <button
+    onClick={() => handleCancel(booking._id)}
+    className="w-full rounded-lg bg-red-500 px-4 py-2.5 font-semibold text-white hover:bg-red-600"
+  >
+    Cancel Booking
+  </button>
+)}
+
               </div>
             </article>
           ))}
