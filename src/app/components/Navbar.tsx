@@ -99,7 +99,7 @@ const Navbar = () => {
           </span>
         </Link>
 
-        <nav className="hidden min-w-0 items-center gap-3 lg:flex md:gap-4 xl:gap-6">
+        <nav className="hidden min-w-0 items-center gap-3 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] md:flex md:gap-3 [&::-webkit-scrollbar]:hidden xl:gap-6">
           {links.map((l) => {
             const active = pathname === l.href;
 
@@ -107,7 +107,7 @@ const Navbar = () => {
               <Link
                 key={l.label}
                 href={l.href}
-                className={`relative whitespace-nowrap py-2 text-[13px] font-medium transition-colors xl:text-sm ${
+                className={`relative whitespace-nowrap py-2 text-[12px] font-medium transition-colors xl:text-sm ${
                   active
                     ? "text-emerald-600"
                     : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
@@ -235,7 +235,7 @@ const Navbar = () => {
         {/* Mobile hamburger — navlinks only */}
         <button
           onClick={() => setOpen(!open)}
-          className="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 lg:hidden"
+          className="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 md:hidden"
           aria-label="Toggle menu"
           aria-expanded={open}
         >
@@ -245,7 +245,7 @@ const Navbar = () => {
 
       {/* Mobile dropdown — navlinks only */}
       {open && (
-        <div className="border-t border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-950 lg:hidden">
+        <div className="border-t border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-950 md:hidden">
           <nav className="flex flex-col gap-1">
             {links.map((l) => {
               const active = pathname === l.href;

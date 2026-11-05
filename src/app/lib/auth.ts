@@ -14,23 +14,10 @@ await client.connect();
 
 const db = client.db("studio-space");
 
-const productionAuthHost =
-  process.env.VERCEL_PROJECT_PRODUCTION_URL || "b-14-a-08-client.vercel.app";
-const authBaseURL = {
-  allowedHosts: [
-    "localhost:3000",
-    "b-14-a-08-client.vercel.app",
-    ...(process.env.VERCEL_URL ? [process.env.VERCEL_URL] : []),
-    ...(process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? [process.env.VERCEL_PROJECT_PRODUCTION_URL]
-      : []),
-  ],
-  fallback: `https://${productionAuthHost}`,
-  protocol: "auto" as const,
-};
+
 
 export const auth = betterAuth({
-  baseURL: authBaseURL,
+  baseURL: process.env.BETTER_AUTH_URL,
   secret: process.env.BETTER_AUTH_SECRET,
   trustedOrigins: [
     "http://localhost:3000",
