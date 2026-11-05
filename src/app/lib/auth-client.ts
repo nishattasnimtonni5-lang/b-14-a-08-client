@@ -1,9 +1,9 @@
 import { createAuthClient } from "better-auth/react";
 import { jwtClient } from "better-auth/client/plugins";
-import { API_BASE_URL } from "./api";
+
 
 export const authClient = createAuthClient({
-  baseURL: API_BASE_URL,
+  baseURL:process.env.BETTER_AUTH_URL,
   plugins: [
     jwtClient(),
   ],
