@@ -200,14 +200,22 @@ const Navbar = () => {
 
             <Link
               href="/signin"
-              className="whitespace-nowrap text-xs font-medium text-slate-700 transition-colors hover:text-emerald-600 dark:text-slate-200 sm:text-sm"
+              className={
+                pathname === "/signin"
+                  ? "whitespace-nowrap rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-5 py-2 text-xs font-semibold text-[#04100e] shadow-[0_0_25px_rgba(16,185,129,0.35)] transition-transform hover:scale-105 sm:px-6 sm:py-2.5 sm:text-sm"
+                  : "whitespace-nowrap text-xs font-medium text-slate-700 transition-colors hover:text-emerald-600 dark:text-slate-200 sm:text-sm"
+              }
             >
               Sign in
             </Link>
 
             <Link
               href="/signup"
-              className="whitespace-nowrap rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-2.5 py-2 text-xs font-semibold text-[#04100e] shadow-[0_0_25px_rgba(16,185,129,0.35)] transition-transform hover:scale-105 sm:px-5 sm:py-2.5 sm:text-sm"
+              className={
+                pathname === "/signup"
+                  ? "whitespace-nowrap rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-5 py-2 text-xs font-semibold text-[#04100e] shadow-[0_0_25px_rgba(16,185,129,0.35)] transition-transform hover:scale-105 sm:px-6 sm:py-2.5 sm:text-sm"
+                  : "whitespace-nowrap text-xs font-medium text-slate-700 transition-colors hover:text-emerald-600 dark:text-slate-200 sm:text-sm"
+              }
             >
               Sign Up
             </Link>

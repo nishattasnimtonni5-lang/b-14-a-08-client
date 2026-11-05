@@ -300,11 +300,7 @@ const detailsPage = async ({ params }: Props) => {
                   </div>
                 </div>
 
-                <p className="mt-5 text-sm text-slate-500">
-                  {reviews > 0
-                    ? "Individual customer reviews are not available yet."
-                    : "No reviews have been submitted for this workspace yet."}
-                </p>
+                
                 <ReviewForm studioId={id} />
               </section>
             </div>
