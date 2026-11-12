@@ -30,7 +30,6 @@ const badgeColors: Record<string, string> = {
   "Sound Stage": "bg-sky-500",
   "Art Workshop": "bg-pink-500",
 };
-
 const StatusMessage = ({
   title,
   description,

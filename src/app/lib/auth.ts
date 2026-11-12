@@ -40,7 +40,7 @@ jwt()
   session:{
 cookieCache:{
   enabled:true,
-  strategy:"compact",
+  strategy:"jwt",
   maxAge:7*24*60*60,
 }
   }

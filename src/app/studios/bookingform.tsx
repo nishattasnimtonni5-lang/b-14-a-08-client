@@ -21,7 +21,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { API_BASE_URL, getBetterAuthToken } from "../lib/api"
+import { API_BASE_URL, getAccessToken } from "../lib/api"
 
 const localToday = () => {
   const now = new Date()
@@ -61,7 +61,7 @@ export function BookingForm({ studioId }: { studioId: string }) {
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
-      const token = await getBetterAuthToken()
+      const token = await getAccessToken()
       const res = await fetch(`${API_BASE_URL}/api/bookings`, {
         method: "POST",
         headers: {
