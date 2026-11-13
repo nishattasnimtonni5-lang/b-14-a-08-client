@@ -32,7 +32,7 @@ const [token, setToken] = useState("");
       setToken(tokenData.token);
       const response = await fetch(`${API_BASE_URL}/api/my-bookings`, {
         headers: {
-          Authorization: `Bearer ${Data.}`,
+          Authorization: `Bearer ${tokenData.token}`,
         },
       });
 
