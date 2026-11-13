@@ -61,7 +61,7 @@ const detailsPage = async ({ params }: Props) => {
   try {
     const res = await fetch(`${API_BASE_URL}/api/studios/${id}`);
     const payload: unknown = await res.json();
-    fetchFailed = !res.ok;
+    fetchFailed = !res.ok && res.status !== 404;
     studio = res.ok ? (payload as Studio) : null;
   } catch {
     fetchFailed = true;
