@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { MessageSquare, Star } from "lucide-react";
 import { authClient } from "@/app/lib/auth-client";
-import { API_BASE_URL } from "@/app/lib/api";
+import { API_BASE_URL, getAccessToken } from "@/app/lib/api";
 import { toast } from "sonner";
 
 type ReviewFormProps = {
@@ -73,6 +73,7 @@ const ReviewForm = ({ studioId }: ReviewFormProps) => {
 
     try {
       setLoading(true);
+      const token = await getAccessToken();
 
       const response = await fetch(
         `${API_BASE_URL}/api/studios/${studioId}/reviews`,
@@ -80,8 +81,8 @@ const ReviewForm = ({ studioId }: ReviewFormProps) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
-          credentials: "include",
           body: JSON.stringify({
             rating,
             comment,
