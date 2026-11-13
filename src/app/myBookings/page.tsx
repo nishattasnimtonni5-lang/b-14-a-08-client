@@ -93,7 +93,6 @@ const [token, setToken] = useState("");
     return (
    
       <div className="mx-auto max-w-[1280px] space-y-6 px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-         <Navbar/>
         <div className="h-9 w-56 animate-pulse rounded-lg bg-gray-200" />
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
